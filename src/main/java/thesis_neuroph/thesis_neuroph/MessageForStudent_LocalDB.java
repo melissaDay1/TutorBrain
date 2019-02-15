@@ -10,6 +10,12 @@ import org.neuroph.core.data.DataSetRow;
 import org.neuroph.util.data.norm.DecimalScaleNormalizer;
 import org.neuroph.util.data.norm.Normalizer;
 
+/**
+ * This is used to calculate a message for the student when connecting to the local
+ * MySQL DB without using the Server
+ * @author Melissa
+ *
+ */
 public class MessageForStudent_LocalDB {
 	private String messageForStudent;
 	private double[] nnOutput;
@@ -21,7 +27,7 @@ public class MessageForStudent_LocalDB {
 	 * @param studentID
 	 * @param tableName
 	 */
-	public MessageForStudent_LocalDB(NN neuralNetworkForTutor, Connection connectionToDB, int studentID, String tableName) {
+	public MessageForStudent_LocalDB(NN_LocalDB neuralNetworkForTutor, Connection connectionToDB, int studentID, String tableName) {
 		Messages messageOptions = new Messages();
 		String queryForStudent = "select * from " + tableName + " where id = " + studentID;
 		/**

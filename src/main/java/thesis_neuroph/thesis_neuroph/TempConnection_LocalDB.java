@@ -1,17 +1,17 @@
 package thesis_neuroph.thesis_neuroph;
 
 /**
- * @TODO: Remove this class when integrating with plug-in
+ * Used to create a connection to the local MySQL DB without using the Server
  */
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class TempConnection {
+public class TempConnection_LocalDB {
 	private Connection dbConnection = null;
 
-	public TempConnection() {
+	public TempConnection_LocalDB() {
 		this.setDBConnection("jdbc:mysql://localhost:3306/tutorData?useSSL=false", "melissa", "");
 
 	}

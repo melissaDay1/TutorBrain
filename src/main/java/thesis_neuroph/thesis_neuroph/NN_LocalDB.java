@@ -1,11 +1,23 @@
+
+
 /**
  * @Source: NN adapted from https://github.com/neuroph/neuroph/tree/master/neuroph-2.9/Samples/src/main/java/org/neuroph/samples
+ * Used to create and train a neural network using a local connection to the DB
  */
 
+/**
+ 
+ */
 package thesis_neuroph.thesis_neuroph;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import org.neuroph.core.NeuralNetwork;
@@ -34,7 +46,7 @@ import org.neuroph.util.random.WeightsRandomizer;
  * @source: Adapted from http://www.ntu.edu.sg/home/ehchua/programming/java/jdbc_basic.html
  * 
  */
-public class TrainedNeuralNetwork implements LearningEventListener {
+public class NN_LocalDB implements LearningEventListener {
 
 	/**
 	 * TODO Make variables private and add setters
@@ -48,8 +60,9 @@ public class TrainedNeuralNetwork implements LearningEventListener {
 	double keywordFloatFound;
 	double outputExpected;
 	
-	private int numberInputNodes;
+	private int NUM_VARIABLES = 8;
 	
+	private String neuralNetworkName = "trainedTutorData.nnet";
 	/**
 	 * @TODO: May want to remove this variable later
 	 */
@@ -60,35 +73,99 @@ public class TrainedNeuralNetwork implements LearningEventListener {
 						{0.4},
 						{0.7}};
 
-	public TrainedNeuralNetwork(DataPreProcessing preProcessedData) {
-		if (preProcessedData.getStudentDataInput().length == 0) {
-			/**
-			 * @TODO: Fill this in
-			 */
-		}
-		else {
-			this.setNumberInputNodes(preProcessedData.getStudentDataInput()[0].length);
-		}
-		// Used for initially creating/saving the NN
-		this.runNN(preProcessedData.getStudentDataInput());
+	public NN_LocalDB(Connection connectionToDB) {
+		String query = "select * from dummyData";
+		List<double[]> data = this.processInputFromDB(connectionToDB, query);
+		double[][] inputArrayTest = this.addInputDataToArray(data);
+		this.runNN(inputArrayTest);
 	}
 
 	
+	/**
+	 * @Source: Adapted from http://www.ntu.edu.sg/home/ehchua/programming/java/jdbc_basic.html
+	 * @param connectionToDB
+	 * @return
+	 */
+	public List<double[]> processInputFromDB(Connection connectionToDB, String sqlQuery) {
+		List<double[]> inputList = new ArrayList<double[]>();
+			//String password = "";
+			try (
+					// Step 2: Allocate a 'Statement' object in the Connection
+					Statement stmt = connectionToDB.createStatement();) {
+				// Step 3: Execute a SQL SELECT query, the query result
+				// is returned in a 'ResultSet' object.
+				//String strSelect = "select * from " + tableName;
+
+				ResultSet rset = stmt.executeQuery(sqlQuery);
+				
+				int rowCount = 0;
+				
+
+				// Step 4: Process the ResultSet by scrolling the cursor forward via next().
+				// For each row, retrieve the contents of the cells with getXxx(columnName).
+				while (rset.next()) { // Move the cursor to the next row, return false if no more row
+					// TODO: Set variables using setters
+					// TODO: Put these column names for MySQL tables in the constants file and access via these to make easier to change
+					
+					this.linesOfCodeTotal = rset.getDouble("LinesOfCodeTotal");
+					this.numberOfMethods = rset.getDouble("NumberOfMethods");
+					this.keywordMainFound = rset.getDouble("KeywordMainFound");
+					this.keywordComparatorFound = rset.getDouble("KeywordComparatorFound");
+					this.keywordNewFound = rset.getDouble("KeywordNewFound");
+					this.keywordDoubleFound = rset.getDouble("KeywordDoubleFound");
+					this.keywordFloatFound = rset.getDouble("KeywordFloatFound");
+					this.outputExpected = rset.getDouble("OutputExpected");
+					
+					inputList.add(new double[] {
+							this.linesOfCodeTotal,
+							this.numberOfMethods,
+							this.keywordMainFound,
+							this.keywordComparatorFound,
+							this.keywordNewFound,
+							this.keywordDoubleFound,
+							this.keywordFloatFound,
+							this.outputExpected
+					});
+					
+				}
+				/*for (double[] dataRow : inputList) {
+					System.out.println(Arrays.toString(dataRow));
+				} */
+
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			
+			return inputList;
+	}
+	
+	public double[][] addInputDataToArray(List<double[]> inputListData) {
+		/**
+		 * @TODO: Check input to make code safe for errors
+		 */
+		double[] element = inputListData.get(0);
+		double[][] inputArray = new double[inputListData.size()][element.length];
+		inputArray = inputListData.toArray(inputArray);
+		/*for (double[] d : inputArray) {
+			System.out.print(Arrays.toString(d));
+		}*/
+		return inputArray;
+	}
+	
+	
+
 	public MultiLayerPerceptron setNN() {
 		// create multi layer perceptron
-        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID,
-        									this.getNumberInputNodes(),
-        									Constants.NUMBER_HIDDEN_NODES,
-        									Constants.NUMBER_OUTPUT_NODES_FROM_NN);
+        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, NUM_VARIABLES, 7, 1);
         myMlPerceptron.randomizeWeights(new WeightsRandomizer(new Random(123)));
         
-        System.out.println("Weights myMlPerceptron: " + Arrays.toString(myMlPerceptron.getWeights()));
+        System.out.println(Arrays.toString(myMlPerceptron.getWeights()));
 
         myMlPerceptron.setLearningRule(new BackPropagation());
       
-        myMlPerceptron.getLearningRule().setLearningRate(Constants.LEARNING_RATE);
-        myMlPerceptron.getLearningRule().setMaxError(Constants.MAX_ERROR);
-        myMlPerceptron.getLearningRule().setMaxIterations(Constants.MAX_ITERATIONS);
+        myMlPerceptron.getLearningRule().setLearningRate(0.7);
+        myMlPerceptron.getLearningRule().setMaxError(0.00001);
+        myMlPerceptron.getLearningRule().setMaxIterations(10000);
         // enable batch if using MomentumBackpropagation
        /* if( myMlPerceptron.getLearningRule() instanceof MomentumBackpropagation )
         	((MomentumBackpropagation)myMlPerceptron.getLearningRule()).setBatchMode(false);*/
@@ -101,13 +178,13 @@ public class TrainedNeuralNetwork implements LearningEventListener {
 	
 	public DataSet setDataForDataSet(double[][] input) {
 		// create training set
-		DataSet trainingSet = new DataSet(numberInputNodes, 1); 
+		DataSet trainingSet = new DataSet(NUM_VARIABLES, 1); 
 		/**
 		 * @TODO: Process all input - this is just testing for 1 element
 		 */
 		for (int i = 0; i < input.length; i++) {
 			trainingSet.addRow(new DataSetRow(
-					input[i], Constants.EXPECTED_OUTPUT_FROM_NN[i]));
+					input[i], OUTPUT[i]));
 		}
 		
 		return trainingSet;
@@ -138,17 +215,17 @@ public class TrainedNeuralNetwork implements LearningEventListener {
         mlPerceptron.learn(data);
 
         // test perceptron
-        System.out.println("Testing trained neural network in TrainedNeuralNetwork class");
+        System.out.println("Testing trained neural network");
         testNeuralNetwork(mlPerceptron, data);
 
         // save trained neural network
-        mlPerceptron.save(Constants.NEURAL_NETWORK_NAME);
+        mlPerceptron.save(this.getNeuralNetworkName());
 
         // load saved neural network
-       NeuralNetwork loadedMlPerceptron = NeuralNetwork.createFromFile(Constants.NEURAL_NETWORK_NAME);
+       NeuralNetwork loadedMlPerceptron = NeuralNetwork.createFromFile("myMlPerceptron.nnet");
 
         // test loaded neural network
-        System.out.println("Testing loaded neural network in TrainedNeuralNetwork class");
+        System.out.println("Testing loaded neural network");
         testNeuralNetwork(loadedMlPerceptron, data);
 	}
 	
@@ -165,12 +242,12 @@ public class TrainedNeuralNetwork implements LearningEventListener {
             neuralNet.calculate();
             double[] networkOutput = neuralNet.getOutput();
 
-            System.out.print("Input testNN in TrainedNeuralNetwork class: " + Arrays.toString(trainingElement.getInput()) );
-            System.out.println(" Output testNN in TrainedNeuralNetwork class: " + Arrays.toString(networkOutput) );
+            System.out.print("Input: " + Arrays.toString(trainingElement.getInput()) );
+            System.out.println(" Output: " + Arrays.toString(networkOutput) );
         }
     }
 
-	@Override
+	//@Override
 	/**
 	 * @Source: https://github.com/neuroph/neuroph/blob/master/neuroph-2.9/Samples/src/main/java/org/neuroph/samples/XorMultiLayerPerceptronSample.java
 	 */
@@ -180,13 +257,23 @@ public class TrainedNeuralNetwork implements LearningEventListener {
             System.out.println(bp.getCurrentIteration() + ". iteration : "+ bp.getTotalNetworkError());
     }
 	
-	public int getNumberInputNodes() {
-		return numberInputNodes;
+	public String getNeuralNetworkName() {
+		return neuralNetworkName;
+	}
+	
+	
+	public void setDbConnection(Connection dbConnection) {
+		this.dbConnection = dbConnection;
 	}
 
 
-	public void setNumberInputNodes(int numberInputs) {
-		numberInputNodes = numberInputs;
+	public Connection getDbConnection() {
+		return dbConnection;
+	}
+
+
+	public int getNUM_VARIABLES() {
+		return NUM_VARIABLES;
 	}
 	
 	

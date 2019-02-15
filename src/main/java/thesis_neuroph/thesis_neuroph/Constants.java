@@ -8,7 +8,7 @@ public class Constants {
 	public static final Map<String, Double> ERROR_MESSAGES = setErrorsHashmap();
 
 	public static Map<String, Double> setErrorsHashmap() {
-		Map<String, Double> errors = new HashMap<>();
+		Map<String, Double> errors = new HashMap<String, Double>();
 		errors.put("StackOverflowError", 1.0);
 		errors.put("cannot find symbol", 2.0);
 		errors.put("{ expected", 3.0);

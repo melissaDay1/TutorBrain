@@ -77,7 +77,7 @@ public class DataPreProcessing {
 		/**
 		 * @TODO: Create with Factory pattern/class
 		 */
-		List<double[]> inputList = new ArrayList<>();
+		List<double[]> inputList = new ArrayList<double[]>();
 
 
 		if (dataFromStudentsArray != null && dataFromStudentsArray.length() > 0) {
@@ -102,7 +102,7 @@ public class DataPreProcessing {
 		/**
 		 * @TODO: Create with Factory pattern/class
 		 */
-		List<double[]> inputList = new ArrayList<>();
+		List<double[]> inputList = new ArrayList<double[]>();
 		this.processInputOneStudent(inputList, inputOneStudent);
 		
 		return inputList;

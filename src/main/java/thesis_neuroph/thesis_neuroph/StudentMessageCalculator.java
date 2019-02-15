@@ -22,7 +22,7 @@ public class StudentMessageCalculator {
 	 * @param studentID
 	 * @param tableName
 	 */
-	public StudentMessageCalculator(TrainedNeuralNetwork neuralNetworkForTutor, 
+	public StudentMessageCalculator(NeuralNetworkBrain neuralNetworkForTutor, 
 			JSONObject dataOneStudent, DataPreProcessing preProcessedData) {
 		/**
 		 * @TODO: implement Factory pattern

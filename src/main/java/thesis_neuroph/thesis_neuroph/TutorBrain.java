@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class TutorBrain {
 	private String messageFromBrain = null;
 	private int messageCodeFromBrain = -1;
-	private TrainedNeuralNetwork trainedNN;
+	private NeuralNetworkBrain trainedNN;
 	private DataPreProcessing preprocessedData;
 	
 	public TutorBrain(JSONArray serverInput) {
@@ -23,7 +23,7 @@ public class TutorBrain {
 		 * @TODO: This actually performs the training - will need to update 
 		 * TrainedNeuralNetwork class later
 		 */
-		this.trainedNN = new TrainedNeuralNetwork(preprocessedData);
+		this.trainedNN = new NeuralNetworkBrain(preprocessedData);
 		
 		System.out.println("\n\nEnd TutorBrain constructor");
 		/**
@@ -86,7 +86,7 @@ public class TutorBrain {
 		this.messageCodeFromBrain = messageCodeFromBrain;
 	}
 
-	protected TrainedNeuralNetwork getTrainedNN() {
+	protected NeuralNetworkBrain getTrainedNN() {
 		return trainedNN;
 	}
 

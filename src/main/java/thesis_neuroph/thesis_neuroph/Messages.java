@@ -17,7 +17,7 @@ public class Messages {
 	private String hint7 = "Use comparator operator";
 	
 	public Messages() {
-		messages = new HashMap<>();
+		messages = new HashMap<Integer, String>();
 		this.setMessages();
 	}
 
