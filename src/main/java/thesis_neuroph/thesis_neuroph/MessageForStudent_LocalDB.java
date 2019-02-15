@@ -10,7 +10,7 @@ import org.neuroph.core.data.DataSetRow;
 import org.neuroph.util.data.norm.DecimalScaleNormalizer;
 import org.neuroph.util.data.norm.Normalizer;
 
-public class MessageForStudent {
+public class MessageForStudent_LocalDB {
 	private String messageForStudent;
 	private double[] nnOutput;
 
@@ -21,7 +21,7 @@ public class MessageForStudent {
 	 * @param studentID
 	 * @param tableName
 	 */
-	public MessageForStudent(NN neuralNetworkForTutor, Connection connectionToDB, int studentID, String tableName) {
+	public MessageForStudent_LocalDB(NN neuralNetworkForTutor, Connection connectionToDB, int studentID, String tableName) {
 		Messages messageOptions = new Messages();
 		String queryForStudent = "select * from " + tableName + " where id = " + studentID;
 		/**
@@ -91,7 +91,7 @@ public class MessageForStudent {
 	}
 	
 	public void setMessageToDisplay(Messages messagesChoices, long messageCode) {
-		String message = messagesChoices.messages.get((int) messageCode);
+		String message = messagesChoices.getMessages().get((int) messageCode);
 		this.setMessageForStudent(message);
 	}
 

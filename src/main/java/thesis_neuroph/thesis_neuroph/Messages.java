@@ -3,15 +3,18 @@ package thesis_neuroph.thesis_neuroph;
 import java.util.HashMap;
 
 public class Messages {
-	HashMap<Integer, String> messages;
+	private HashMap<Integer, String> messages;
 	
-	String hint1 = "Add main";
-	String hint2 = "Add new";
-	String hint3 = "Use 'if'";
-	String hint4 = "I don't know how to help you";
-	String hint5 = "Add more methods";
-	String hint6 = "Use a double data type";
-	String hint7 = "Use comparator operator";
+	/**
+	 * TODO: Change messages
+	 */
+	private String hint1 = "Add main";
+	private String hint2 = "Add new";
+	private String hint3 = "Use 'if'";
+	private String hint4 = "I don't know how to help you";
+	private String hint5 = "Add more methods";
+	private String hint6 = "Use a double data type";
+	private String hint7 = "Use comparator operator";
 	
 	public Messages() {
 		messages = new HashMap<>();
@@ -27,5 +30,11 @@ public class Messages {
 		messages.put(60, hint6);
 		messages.put(70, hint7);
 	}
+
+	public HashMap<Integer, String> getMessages() {
+		return messages;
+	}
+	
+	
 
 }
