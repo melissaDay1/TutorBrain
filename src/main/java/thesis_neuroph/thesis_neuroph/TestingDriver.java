@@ -30,6 +30,16 @@ public class TestingDriver {
 			/**
 			 * @TODO: End part to delete
 			 */
+			
+			/**
+			 * @TODO: Remove this section when integrating with plug-in
+			 * Plug-in assumes that a trained NN already exists
+			 */
+			NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayData);
+			/**
+			 * @TODO: End part to delete
+			 */
+			
 			TutorBrain brain = new TutorBrain(jsonArrayData);
 			brain.getMessage(studentObj);
 			brain.getMessageCode(studentObj);

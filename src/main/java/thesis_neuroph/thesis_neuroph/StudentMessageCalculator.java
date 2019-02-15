@@ -22,17 +22,16 @@ public class StudentMessageCalculator {
 	 * @param studentID
 	 * @param tableName
 	 */
-	public StudentMessageCalculator(NeuralNetworkBrain neuralNetworkForTutor, 
-			JSONObject dataOneStudent, DataPreProcessing preProcessedData) {
+	public StudentMessageCalculator(JSONObject dataOneStudent) {
 		/**
 		 * @TODO: implement Factory pattern
 		 */
 		Messages messageOptions = new Messages();
-		List<double[]> data = preProcessedData.processJSONObject(dataOneStudent);
+		List<double[]> data = DataPreProcessing.processJSONObject(dataOneStudent);
 		if (!data.isEmpty()) {
 			double[] element = data.get(0);
 			this.loadNeuralNetwork(Constants.NEURAL_NETWORK_NAME, 
-					element, neuralNetworkForTutor.getNumberInputNodes());
+					element, NeuralNetworkBrain.getNumberInputNodes());
 		}
 		
 		long msgCode = this.calculateMessageCode();

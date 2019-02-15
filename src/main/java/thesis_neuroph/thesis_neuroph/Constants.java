@@ -23,7 +23,7 @@ public class Constants {
 		return Collections.unmodifiableMap(errors);
 	}
 
-	//public static final int NUMBER_INPUT_NODES_TO_NN = 16;
+	//private static int numberInputNodesToNN = 0;
 	public static final double[][] EXPECTED_OUTPUT_FROM_NN = {{0.1},
 											{0.6},
 											{0.4},

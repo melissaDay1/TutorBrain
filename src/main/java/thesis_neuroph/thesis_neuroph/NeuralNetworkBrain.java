@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.json.JSONArray;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.core.data.DataSetRow;
@@ -15,62 +16,43 @@ import org.neuroph.core.events.LearningEvent;
 import org.neuroph.core.events.LearningEventListener;
 import org.neuroph.core.learning.LearningRule;
 import org.neuroph.nnet.MultiLayerPerceptron;
-import org.neuroph.nnet.Perceptron;
 import org.neuroph.nnet.learning.BackPropagation;
-import org.neuroph.nnet.learning.MomentumBackpropagation;
 import org.neuroph.util.TransferFunctionType;
 import org.neuroph.util.data.norm.DecimalScaleNormalizer;
-import org.neuroph.util.data.norm.MaxMinNormalizer;
-import org.neuroph.util.data.norm.MaxNormalizer;
 import org.neuroph.util.data.norm.Normalizer;
 import org.neuroph.util.random.WeightsRandomizer;
 
 
-/**
- * This sample shows hot to read network input and write network output to
- * database using Neuroph JDBC adapaters.
- * 
- * @source: Adapted from https://github.com/neuroph/neuroph/blob/master/neuroph-2.9/Samples/src/main/java/org/neuroph/samples/XorMultiLayerPerceptronSample.java
- * @source: Adapted from http://www.ntu.edu.sg/home/ehchua/programming/java/jdbc_basic.html
- * 
- */
 public class NeuralNetworkBrain implements LearningEventListener {
 
-	/**
-	 * TODO Make variables private and add setters
-	 */
-	double linesOfCodeTotal;
+	/*double linesOfCodeTotal;
 	double numberOfMethods;
 	double keywordMainFound;
 	double keywordComparatorFound;
 	double keywordNewFound;
 	double keywordDoubleFound;
 	double keywordFloatFound;
-	double outputExpected;
+	double outputExpected; */
 	
-	private int numberInputNodes;
+	private static int numberInputNodes;
 	
-	/**
-	 * @TODO: May want to remove this variable later
-	 */
-	private Connection dbConnection = null;
-	
-	double[][] OUTPUT = {{0.1},
-						{0.6},
-						{0.4},
-						{0.7}};
 
-	public NeuralNetworkBrain(DataPreProcessing preProcessedData) {
-		if (preProcessedData.getStudentDataInput().length == 0) {
+	public NeuralNetworkBrain(JSONArray serverInput) {
+		/**
+		 * @TODO: Implement Factory pattern
+		 */
+		DataPreProcessing preprocessedData = new DataPreProcessing(serverInput);
+		
+		if (preprocessedData.getStudentDataInput().length == 0) {
 			/**
 			 * @TODO: Fill this in
 			 */
 		}
 		else {
-			this.setNumberInputNodes(preProcessedData.getStudentDataInput()[0].length);
+			this.setNumberInputNodes(preprocessedData.getStudentDataInput()[0].length);
 		}
 		// Used for initially creating/saving the NN
-		this.runNN(preProcessedData.getStudentDataInput());
+		this.trainNeuralNet(preprocessedData.getStudentDataInput());
 	}
 
 	
@@ -127,7 +109,7 @@ public class NeuralNetworkBrain implements LearningEventListener {
 	        }
 	}
 	
-	public void runNN(double[][] inputArrayForNN) {
+	public void trainNeuralNet(double[][] inputArrayForNN) {
 		DataSet data = this.setDataForDataSet(inputArrayForNN);
 		
 		this.normalizeData(data);
@@ -145,11 +127,11 @@ public class NeuralNetworkBrain implements LearningEventListener {
         mlPerceptron.save(Constants.NEURAL_NETWORK_NAME);
 
         // load saved neural network
-       NeuralNetwork loadedMlPerceptron = NeuralNetwork.createFromFile(Constants.NEURAL_NETWORK_NAME);
+       //NeuralNetwork loadedMlPerceptron = NeuralNetwork.createFromFile(Constants.NEURAL_NETWORK_NAME);
 
         // test loaded neural network
-        System.out.println("Testing loaded neural network in TrainedNeuralNetwork class");
-        testNeuralNetwork(loadedMlPerceptron, data);
+        //System.out.println("Testing loaded neural network in TrainedNeuralNetwork class");
+        //testNeuralNetwork(loadedMlPerceptron, data);
 	}
 	
 	/**
@@ -170,7 +152,7 @@ public class NeuralNetworkBrain implements LearningEventListener {
         }
     }
 
-	//@Override
+	@Override
 	/**
 	 * @Source: https://github.com/neuroph/neuroph/blob/master/neuroph-2.9/Samples/src/main/java/org/neuroph/samples/XorMultiLayerPerceptronSample.java
 	 */
@@ -180,14 +162,11 @@ public class NeuralNetworkBrain implements LearningEventListener {
             System.out.println(bp.getCurrentIteration() + ". iteration : "+ bp.getTotalNetworkError());
     }
 	
-	public int getNumberInputNodes() {
+	public static int getNumberInputNodes() {
 		return numberInputNodes;
 	}
-
 
 	public void setNumberInputNodes(int numberInputs) {
 		numberInputNodes = numberInputs;
 	}
-	
-	
 }

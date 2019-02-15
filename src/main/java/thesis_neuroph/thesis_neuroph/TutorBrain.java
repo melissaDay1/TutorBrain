@@ -9,47 +9,25 @@ import org.json.JSONObject;
 public class TutorBrain {
 	private String messageFromBrain = null;
 	private int messageCodeFromBrain = -1;
-	private NeuralNetworkBrain trainedNN;
 	private DataPreProcessing preprocessedData;
 	
-	public TutorBrain(JSONArray serverInput) {
-		/**
-		 * @TODO: Implement Factory pattern
-		 */
-		this.preprocessedData = new DataPreProcessing(serverInput);
-		
-		
-		/**
-		 * @TODO: This actually performs the training - will need to update 
-		 * TrainedNeuralNetwork class later
-		 */
-		this.trainedNN = new NeuralNetworkBrain(preprocessedData);
-		
-		System.out.println("\n\nEnd TutorBrain constructor");
-		/**
-		 * @TODO: Delete this section when integrating
-		 */
-		/*ServerConnection serverConn = new ServerConnection();
-		StudentMessageCalculator messageInfo;
-		try {
-			JSONObject studentDataObject = serverConn.getDataOneStudent(serverInput, 0);
-			messageInfo = new StudentMessageCalculator(
-					trainedNN, studentDataObject, preprocessedData);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} */
-		// **** End delete section
-		
+	/**
+	 * This constructor used when Neural Network is already trained
+	 */
+	public TutorBrain() {
 		
 	}
 	
+	/**
+	 * Used when Neural Network will be trained
+	 * @param serverInput
+	 */
+	public TutorBrain(JSONArray serverInput) {
+		NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(serverInput);
+	}
+	
 	protected void calculateMessage(JSONObject dataForOneStudent) {
-		StudentMessageCalculator messageInfo = new StudentMessageCalculator(
-				this.getTrainedNN(), dataForOneStudent, this.getPreprocessedData());
+		StudentMessageCalculator messageInfo = new StudentMessageCalculator(dataForOneStudent);
 		
 		this.setMessageCodeFromBrain(messageInfo.getMessageCode());
 		this.setMessageFromBrain(messageInfo.getMessageForStudent());
@@ -84,10 +62,6 @@ public class TutorBrain {
 
 	protected void setMessageCodeFromBrain(int messageCodeFromBrain) {
 		this.messageCodeFromBrain = messageCodeFromBrain;
-	}
-
-	protected NeuralNetworkBrain getTrainedNN() {
-		return trainedNN;
 	}
 
 	protected DataPreProcessing getPreprocessedData() {

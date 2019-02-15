@@ -21,45 +21,45 @@ public class DataPreProcessing {
 	private double action;
 	
 	private double assignmentName;
-	private double linesOfCodeTotal;
+	private static double linesOfCodeTotal;
 
-	private double keywordComparatorFound;
-	private double keywordNewFound;
-	private double keywordDoubleFound;
-	private double keyWordFloatFound;
-	private double keywordIfFound;
-	private double keywordForWhileDoFound;
-	private double keywordReturnFound;
+	private static double keywordComparatorFound;
+	private static double keywordNewFound;
+	private static double keywordDoubleFound;
+	private static double keyWordFloatFound;
+	private static double keywordIfFound;
+	private static double keywordForWhileDoFound;
+	private static double keywordReturnFound;
 
-	private double numberOfCommentLines;
-	private double linesOfCodeChangedSinceLastRun;
-	private double errorType;
-	private double errorTotal;
-	private double numberRunAttempts;
-	private double runAttemptsSinceLastHint;
-	private double submissionDateTime;
+	private static double numberOfCommentLines;
+	private static double linesOfCodeChangedSinceLastRun;
+	private static double errorType;
+	private static double errorTotal;
+	private static double numberRunAttempts;
+	private static double runAttemptsSinceLastHint;
+	private static double submissionDateTime;
 
-	private double assignmentCompletedSuccessfully;
+	private static double assignmentCompletedSuccessfully;
 
-	private double errorCountSinceLastHint;
-	private double messageGiven;
-	private double messageCode;
+	private static double errorCountSinceLastHint;
+	private static double messageGiven;
+	private static double messageCode;
 
-	private double feedbackSurvey;
+	private static double feedbackSurvey;
 
 	// In Review
 	// ---------------------------
-	private double cyclomaticComplexity;
-	private double timerValue;
-	private double timeSinceLastRun;
-	private double timeIdle;
-	private double timeTotal;
-	private double timeWorking;
-	private double timeWithErrors;
-	private double timeUntilErrorFixed;
-	private double timeSinceLastHint;
-	private double timeMostRecentHint;
-	private double timeSecondMostRecentHint;
+	private static double cyclomaticComplexity;
+	private static double timerValue;
+	private static double timeSinceLastRun;
+	private static double timeIdle;
+	private static double timeTotal;
+	private static double timeWorking;
+	private static double timeWithErrors;
+	private static double timeUntilErrorFixed;
+	private static double timeSinceLastHint;
+	private static double timeMostRecentHint;
+	private static double timeSecondMostRecentHint;
 
 	// ---------------------------
 
@@ -98,46 +98,46 @@ public class DataPreProcessing {
 	 * @param inputOneStudent
 	 * @return
 	 */
-	public List<double[]> processJSONObject(JSONObject inputOneStudent) {
+	public static List<double[]> processJSONObject(JSONObject inputOneStudent) {
 		/**
 		 * @TODO: Create with Factory pattern/class
 		 */
 		List<double[]> inputList = new ArrayList<double[]>();
-		this.processInputOneStudent(inputList, inputOneStudent);
+		processInputOneStudent(inputList, inputOneStudent);
 		
 		return inputList;
 	}
 	
-	public void processInputOneStudent(List<double[]> inputDataList, JSONObject inputOneStudent) {
-		int studentId = inputOneStudent.getInt("studentId");
+	public static void processInputOneStudent(List<double[]> inputDataList, JSONObject inputOneStudent) {
+		//int studentId = inputOneStudent.getInt("studentId");
 		/**
 		 * @TODO: How to get this value from JSON???
 		 */
 		// Action action;	
 		// String assignmentName;
-		this.setLinesOfCodeTotal(inputOneStudent.getInt("linesOfCodeTotal"));
-		this.setKeywordComparatorFound(inputOneStudent.getInt("keywordComparatorFound"));
-		this.setKeywordNewFound(inputOneStudent.getInt("keywordNewFound"));
-		this.setKeywordDoubleFound(inputOneStudent.getInt("keywordDoubleFound"));
-		this.setKeywordDoubleFound(inputOneStudent.getInt("keyWordFloatFound"));
-		this.setKeywordIfFound(inputOneStudent.getInt("keywordIfFound"));
-		this.setKeywordForWhileDoFound(inputOneStudent.getInt("keywordForWhileDoFound"));
-		this.setKeywordReturnFound(inputOneStudent.getInt("keywordReturnFound"));
-		this.setNumberOfCommentLines(inputOneStudent.getInt("numberOfCommentLines"));
-		this.setLinesOfCodeChangedSinceLastRun(inputOneStudent.getInt("linesOfCodeChangedSinceLastRun"));
+		setLinesOfCodeTotal(inputOneStudent.getInt("linesOfCodeTotal"));
+		setKeywordComparatorFound(inputOneStudent.getInt("keywordComparatorFound"));
+		setKeywordNewFound(inputOneStudent.getInt("keywordNewFound"));
+		setKeywordDoubleFound(inputOneStudent.getInt("keywordDoubleFound"));
+		setKeywordDoubleFound(inputOneStudent.getInt("keyWordFloatFound"));
+		setKeywordIfFound(inputOneStudent.getInt("keywordIfFound"));
+		setKeywordForWhileDoFound(inputOneStudent.getInt("keywordForWhileDoFound"));
+		setKeywordReturnFound(inputOneStudent.getInt("keywordReturnFound"));
+		setNumberOfCommentLines(inputOneStudent.getInt("numberOfCommentLines"));
+		setLinesOfCodeChangedSinceLastRun(inputOneStudent.getInt("linesOfCodeChangedSinceLastRun"));
 
-		this.setErrorType(inputOneStudent.getString("errorType"));
-		this.setErrorTotal(inputOneStudent.getInt("errorTotal"));
-		this.setNumberRunAttempts(inputOneStudent.getInt("numberRunAttempts"));
-		this.setRunAttemptsSinceLastHint(inputOneStudent.getInt("runAttemptsSinceLastHint"));
+		setErrorType(inputOneStudent.getString("errorType"));
+		setErrorTotal(inputOneStudent.getInt("errorTotal"));
+		setNumberRunAttempts(inputOneStudent.getInt("numberRunAttempts"));
+		setRunAttemptsSinceLastHint(inputOneStudent.getInt("runAttemptsSinceLastHint"));
 		/**
 		 * @TODO: Figure out how to get the date from JObject
 		 */
 		// Date submissionDateTime = jObj.getDate("submissionDateTime");
 
-		this.setAssignmentCompletedSuccessfully(inputOneStudent.getInt("assignmentCompletedSuccessfully"));
+		setAssignmentCompletedSuccessfully(inputOneStudent.getInt("assignmentCompletedSuccessfully"));
 
-		this.setErrorCountSinceLastHint(inputOneStudent.getInt("errorCountSinceLastHint"));
+		setErrorCountSinceLastHint(inputOneStudent.getInt("errorCountSinceLastHint"));
 		/**
 		 * @TODO: May need this variable later
 		 */
@@ -158,23 +158,23 @@ public class DataPreProcessing {
 		// ---------------------------
 		
 		inputDataList.add(new double[] {
-				this.linesOfCodeTotal,
-				this.keywordComparatorFound,
-				this.keywordNewFound,
-				this.keywordDoubleFound,
-				this.keyWordFloatFound,
-				this.keywordIfFound,
-				this.keywordForWhileDoFound,
-				this.keywordReturnFound,
-				this.numberOfCommentLines,
-				this.linesOfCodeChangedSinceLastRun,
-				this.errorType,
-				this.errorTotal,
-				this.numberRunAttempts,
-				this.runAttemptsSinceLastHint,
+				getLinesOfCodeTotal(),
+				getKeywordComparatorFound(),
+				getKeywordNewFound(),
+				getKeywordDoubleFound(),
+				getKeyWordFloatFound(),
+				getKeywordIfFound(),
+				getKeywordForWhileDoFound(),
+				getKeywordReturnFound(),
+				getNumberOfCommentLines(),
+				getLinesOfCodeChangedSinceLastRun(),
+				getErrorType(),
+				getErrorTotal(),
+				getNumberRunAttempts(),
+				getRunAttemptsSinceLastHint(),
 				//this.submissionDateTime,
-				this.assignmentCompletedSuccessfully,
-				this.errorCountSinceLastHint,
+				getAssignmentCompletedSuccessfully(),
+				getErrorCountSinceLastHint(),
 		});
 	}
 	
@@ -223,91 +223,91 @@ public class DataPreProcessing {
 		this.assignmentName = assignmentName;
 	}
 
-	public double getLinesOfCodeTotal() {
+	public static double getLinesOfCodeTotal() {
 		return linesOfCodeTotal;
 	}
 
-	public void setLinesOfCodeTotal(int linesOfCodeTotalInput) {
-		this.linesOfCodeTotal = linesOfCodeTotalInput;
+	public static void setLinesOfCodeTotal(int linesOfCodeTotalInput) {
+		linesOfCodeTotal = linesOfCodeTotalInput;
 	}
 
-	public double getKeywordComparatorFound() {
+	public static double getKeywordComparatorFound() {
 		return keywordComparatorFound;
 	}
 
-	public void setKeywordComparatorFound(int keywordComparatorFoundInput) {
-		this.keywordComparatorFound = keywordComparatorFoundInput;
+	public static void setKeywordComparatorFound(int keywordComparatorFoundInput) {
+		keywordComparatorFound = keywordComparatorFoundInput;
 	}
 
-	public double getKeywordNewFound() {
+	public static double getKeywordNewFound() {
 		return keywordNewFound;
 	}
 
-	public void setKeywordNewFound(int keywordNewFoundInput) {
-		this.keywordNewFound = keywordNewFoundInput;
+	public static void setKeywordNewFound(int keywordNewFoundInput) {
+		keywordNewFound = keywordNewFoundInput;
 	}
 
-	public double getKeywordDoubleFound() {
+	public static double getKeywordDoubleFound() {
 		return keywordDoubleFound;
 	}
 
-	public void setKeywordDoubleFound(int keywordDoubleFoundInput) {
-		this.keywordDoubleFound = keywordDoubleFoundInput;
+	public static void setKeywordDoubleFound(int keywordDoubleFoundInput) {
+		keywordDoubleFound = keywordDoubleFoundInput;
 	}
 
-	public double getKeyWordFloatFound() {
+	public static double getKeyWordFloatFound() {
 		return keyWordFloatFound;
 	}
 
-	public void setKeyWordFloatFound(int keyWordFloatFoundInput) {
-		this.keyWordFloatFound = keyWordFloatFoundInput;
+	public static void setKeyWordFloatFound(int keyWordFloatFoundInput) {
+		keyWordFloatFound = keyWordFloatFoundInput;
 	}
 
-	public double getKeywordIfFound() {
+	public static double getKeywordIfFound() {
 		return keywordIfFound;
 	}
 
-	public void setKeywordIfFound(int keywordIfFoundInput) {
-		this.keywordIfFound = keywordIfFoundInput;
+	public static void setKeywordIfFound(int keywordIfFoundInput) {
+		keywordIfFound = keywordIfFoundInput;
 	}
 
-	public double getKeywordForWhileDoFound() {
+	public static double getKeywordForWhileDoFound() {
 		return keywordForWhileDoFound;
 	}
 
-	public void setKeywordForWhileDoFound(int keywordForWhileDoFoundInput) {
-		this.keywordForWhileDoFound = keywordForWhileDoFoundInput;
+	public static void setKeywordForWhileDoFound(int keywordForWhileDoFoundInput) {
+		keywordForWhileDoFound = keywordForWhileDoFoundInput;
 	}
 
-	public double getKeywordReturnFound() {
+	public static double getKeywordReturnFound() {
 		return keywordReturnFound;
 	}
 
-	public void setKeywordReturnFound(int keywordReturnFoundInput) {
-		this.keywordReturnFound = keywordReturnFoundInput;
+	public static void setKeywordReturnFound(int keywordReturnFoundInput) {
+		keywordReturnFound = keywordReturnFoundInput;
 	}
 
-	public double getNumberOfCommentLines() {
+	public static double getNumberOfCommentLines() {
 		return numberOfCommentLines;
 	}
 
-	public void setNumberOfCommentLines(int numberOfCommentLinesInput) {
-		this.numberOfCommentLines = numberOfCommentLinesInput;
+	public static void setNumberOfCommentLines(int numberOfCommentLinesInput) {
+		numberOfCommentLines = numberOfCommentLinesInput;
 	}
 
-	public double getLinesOfCodeChangedSinceLastRun() {
+	public static double getLinesOfCodeChangedSinceLastRun() {
 		return linesOfCodeChangedSinceLastRun;
 	}
 
-	public void setLinesOfCodeChangedSinceLastRun(int linesOfCodeChangedSinceLastRunInput) {
-		this.linesOfCodeChangedSinceLastRun = linesOfCodeChangedSinceLastRunInput;
+	public static void setLinesOfCodeChangedSinceLastRun(int linesOfCodeChangedSinceLastRunInput) {
+		linesOfCodeChangedSinceLastRun = linesOfCodeChangedSinceLastRunInput;
 	}
 
-	public double getErrorType() {
+	public static double getErrorType() {
 		return errorType;
 	}
 
-	public void setErrorType(String errorTypeInput) {
+	public static void setErrorType(String errorTypeInput) {
 		Map<String, Double> errorCodes = Constants.ERROR_MESSAGES;
 		double errorValue;
 		if (errorCodes.containsKey(errorTypeInput)) {
@@ -316,173 +316,170 @@ public class DataPreProcessing {
 		else {
 			errorValue = 0.0;
 		}
-		this.errorType = errorValue;
+		errorType = errorValue;
 	}
 
-	public double getErrorTotal() {
+	public static double getErrorTotal() {
 		return errorTotal;
 	}
 
-	public void setErrorTotal(int errorTotalInput) {
-		this.errorTotal = errorTotalInput;
+	public static void setErrorTotal(int errorTotalInput) {
+		errorTotal = errorTotalInput;
 	}
 
-	public double getNumberRunAttempts() {
+	public static double getNumberRunAttempts() {
 		return numberRunAttempts;
 	}
 
-	public void setNumberRunAttempts(int numberRunAttemptsInput) {
-		this.numberRunAttempts = numberRunAttemptsInput;
+	public static void setNumberRunAttempts(int numberRunAttemptsInput) {
+		numberRunAttempts = numberRunAttemptsInput;
 	}
 
-	public double getRunAttemptsSinceLastHint() {
+	public static double getRunAttemptsSinceLastHint() {
 		return runAttemptsSinceLastHint;
 	}
 
-	public void setRunAttemptsSinceLastHint(int runAttemptsSinceLastHintInput) {
-		this.runAttemptsSinceLastHint = runAttemptsSinceLastHintInput;
+	public static void setRunAttemptsSinceLastHint(int runAttemptsSinceLastHintInput) {
+		runAttemptsSinceLastHint = runAttemptsSinceLastHintInput;
 	}
 
-	public double getSubmissionDateTime() {
+	public static double getSubmissionDateTime() {
 		return submissionDateTime;
 	}
 
-	public void setSubmissionDateTime(double submissionDateTime) {
-		this.submissionDateTime = submissionDateTime;
+	public static void setSubmissionDateTime(double submissionDateTime) {
+		submissionDateTime = submissionDateTime;
 	}
 
-	public double getAssignmentCompletedSuccessfully() {
+	public static double getAssignmentCompletedSuccessfully() {
 		return assignmentCompletedSuccessfully;
 	}
 
-	public void setAssignmentCompletedSuccessfully(double assignmentCompletedSuccessfully) {
-		this.assignmentCompletedSuccessfully = assignmentCompletedSuccessfully;
+	public static void setAssignmentCompletedSuccessfully(double assignmentCompletedSuccessfully) {
+		assignmentCompletedSuccessfully = assignmentCompletedSuccessfully;
 	}
 
-	public double getErrorCountSinceLastHint() {
+	public static double getErrorCountSinceLastHint() {
 		return errorCountSinceLastHint;
 	}
 
-	public void setErrorCountSinceLastHint(int errorCountSinceLastHintInput) {
-		this.errorCountSinceLastHint = errorCountSinceLastHintInput;
+	public static void setErrorCountSinceLastHint(int errorCountSinceLastHintInput) {
+		errorCountSinceLastHint = errorCountSinceLastHintInput;
 	}
 
-	public double getMessageGiven() {
+	public static double getMessageGiven() {
 		return messageGiven;
 	}
 
-	public void setMessageGiven(double messageGiven) {
-		this.messageGiven = messageGiven;
+	public static void setMessageGiven(double messageGiven) {
+		messageGiven = messageGiven;
 	}
 
 	public double getMessageCode() {
 		return messageCode;
 	}
 
-	public void setMessageCode(double messageCode) {
-		this.messageCode = messageCode;
+	public static void setMessageCode(double messageCode) {
+		messageCode = messageCode;
 	}
 
-	public double getFeedbackSurvey() {
+	public static double getFeedbackSurvey() {
 		return feedbackSurvey;
 	}
 
-	public void setFeedbackSurvey(double feedbackSurvey) {
-		this.feedbackSurvey = feedbackSurvey;
+	public static void setFeedbackSurvey(double feedbackSurvey) {
+		feedbackSurvey = feedbackSurvey;
 	}
 
-	public double getCyclomaticComplexity() {
+	public static double getCyclomaticComplexity() {
 		return cyclomaticComplexity;
 	}
 
-	public void setCyclomaticComplexity(double cyclomaticComplexity) {
-		this.cyclomaticComplexity = cyclomaticComplexity;
+	public static void setCyclomaticComplexity(double cyclomaticComplexity) {
+		cyclomaticComplexity = cyclomaticComplexity;
 	}
 
-	public double getTimerValue() {
+	public static double getTimerValue() {
 		return timerValue;
 	}
 
-	public void setTimerValue(double timerValue) {
-		this.timerValue = timerValue;
+	public static void setTimerValue(double timerValue) {
+		timerValue = timerValue;
 	}
 
-	public double getTimeSinceLastRun() {
+	public static double getTimeSinceLastRun() {
 		return timeSinceLastRun;
 	}
 
-	public void setTimeSinceLastRun(double timeSinceLastRun) {
-		this.timeSinceLastRun = timeSinceLastRun;
+	public static void setTimeSinceLastRun(double timeSinceLastRun) {
+		timeSinceLastRun = timeSinceLastRun;
 	}
 
-	public double getTimeIdle() {
+	public static double getTimeIdle() {
 		return timeIdle;
 	}
 
-	public void setTimeIdle(double timeIdle) {
-		this.timeIdle = timeIdle;
+	public static void setTimeIdle(double timeIdle) {
+		timeIdle = timeIdle;
 	}
 
-	public double getTimeTotal() {
+	public static double getTimeTotal() {
 		return timeTotal;
 	}
 
-	public void setTimeTotal(double timeTotal) {
-		this.timeTotal = timeTotal;
+	public static void setTimeTotal(double timeTotal) {
+		timeTotal = timeTotal;
 	}
 
-	public double getTimeWorking() {
+	public static double getTimeWorking() {
 		return timeWorking;
 	}
 
-	public void setTimeWorking(double timeWorking) {
-		this.timeWorking = timeWorking;
+	public static void setTimeWorking(double timeWorking) {
+		timeWorking = timeWorking;
 	}
 
-	public double getTimeWithErrors() {
+	public static double getTimeWithErrors() {
 		return timeWithErrors;
 	}
 
-	public void setTimeWithErrors(double timeWithErrors) {
-		this.timeWithErrors = timeWithErrors;
+	public static void setTimeWithErrors(double timeWithErrors) {
+		timeWithErrors = timeWithErrors;
 	}
 
-	public double getTimeUntilErrorFixed() {
+	public static double getTimeUntilErrorFixed() {
 		return timeUntilErrorFixed;
 	}
 
-	public void setTimeUntilErrorFixed(double timeUntilErrorFixed) {
-		this.timeUntilErrorFixed = timeUntilErrorFixed;
+	public static void setTimeUntilErrorFixed(double timeUntilErrorFixed) {
+		timeUntilErrorFixed = timeUntilErrorFixed;
 	}
 
-	public double getTimeSinceLastHint() {
+	public static double getTimeSinceLastHint() {
 		return timeSinceLastHint;
 	}
 
-	public void setTimeSinceLastHint(double timeSinceLastHint) {
-		this.timeSinceLastHint = timeSinceLastHint;
+	public static void setTimeSinceLastHint(double timeSinceLastHint) {
+		timeSinceLastHint = timeSinceLastHint;
 	}
 
-	public double getTimeMostRecentHint() {
+	public static double getTimeMostRecentHint() {
 		return timeMostRecentHint;
 	}
 
-	public void setTimeMostRecentHint(double timeMostRecentHint) {
-		this.timeMostRecentHint = timeMostRecentHint;
+	public static void setTimeMostRecentHint(double timeMostRecentHint) {
+		timeMostRecentHint = timeMostRecentHint;
 	}
 
-	public double getTimeSecondMostRecentHint() {
+	public static double getTimeSecondMostRecentHint() {
 		return timeSecondMostRecentHint;
 	}
 
-	public void setTimeSecondMostRecentHint(double timeSecondMostRecentHint) {
-		this.timeSecondMostRecentHint = timeSecondMostRecentHint;
+	public static void setTimeSecondMostRecentHint(double timeSecondMostRecentHint) {
+		timeSecondMostRecentHint = timeSecondMostRecentHint;
 	}
 
 	public double[][] getStudentDataInput() {
 		return studentDataInput;
 	}
-
-	
-	
 }
