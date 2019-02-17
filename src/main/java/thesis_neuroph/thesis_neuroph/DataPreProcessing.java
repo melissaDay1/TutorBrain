@@ -1,28 +1,34 @@
 package thesis_neuroph.thesis_neuroph;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * This pre-processes data received from the server/plug-in.
+ * Pre-processing includes storing all data as doubles.
+ * @author Melissa
+ *
+ */
+
 public class DataPreProcessing {
 	/**
 	 * @TODO: Add other variables with difficult types to data input: i.e. Date, etc.
 	 */
-
 	//private long id;
+	/**
+	 * @TODO: Probably won't send these to NN
+	 */
 	private double[][] studentDataInput;
-
 	private double studentId;
-	
-	private double action;
-	
 	private double assignmentName;
-	private static double linesOfCodeTotal;
 
+	
+	private static double action;
+	private static double linesOfCodeTotal;
 	private static double keywordComparatorFound;
 	private static double keywordNewFound;
 	private static double keywordDoubleFound;
@@ -30,7 +36,6 @@ public class DataPreProcessing {
 	private static double keywordIfFound;
 	private static double keywordForWhileDoFound;
 	private static double keywordReturnFound;
-
 	private static double numberOfCommentLines;
 	private static double linesOfCodeChangedSinceLastRun;
 	private static double errorType;
@@ -38,31 +43,29 @@ public class DataPreProcessing {
 	private static double numberRunAttempts;
 	private static double runAttemptsSinceLastHint;
 	private static double submissionDateTime;
-
 	private static double assignmentCompletedSuccessfully;
-
 	private static double errorCountSinceLastHint;
 	private static double messageGiven;
 	private static double messageCode;
-
 	private static double feedbackSurvey;
+	
 
+	/**
+	 * @TODO:
+	 */
 	// In Review
-	// ---------------------------
+	//---------------------------
 	private static double cyclomaticComplexity;
-	private static double timerValue;
-	private static double timeSinceLastRun;
-	private static double timeIdle;
-	private static double timeTotal;
-	private static double timeWorking;
-	private static double timeWithErrors;
-	private static double timeUntilErrorFixed;
-	private static double timeSinceLastHint;
-	private static double timeMostRecentHint;
-	private static double timeSecondMostRecentHint;
 
 	// ---------------------------
 
+	/**
+	 * Handles all data pre-processing for input to the NN.
+	 * After converting inputs to doubles, this adds these values to the 2D
+	 * 		double array variable: studentDataInput.
+	 * Eventually, this 2D array will be sent to the NN.
+	 * @param dataFromStudents	All input data from the Server
+	 */
 	public DataPreProcessing(JSONArray dataFromStudents) {
 		/**
 		 * @TODO: Create with Factory pattern/class???
@@ -72,6 +75,11 @@ public class DataPreProcessing {
 		this.studentDataInput = inputArrayForNN;
 	}
 	
+	/**
+	 * Pre-processes all values in the JSONArray
+	 * @param dataFromStudentsArray All input data from the Server
+	 * @return	List<double[]> containing the pre-processed values from Server
+	 */
 	public List<double[]> processJSONArray(JSONArray dataFromStudentsArray) {
 		int jsonCount = 0;
 		/**
@@ -85,7 +93,7 @@ public class DataPreProcessing {
 			while (jsonCount < dataFromStudentsArray.length()) {
 				JSONObject jObj = dataFromStudentsArray.getJSONObject(jsonCount);
 				
-				this.processInputOneStudent(inputList, jObj);
+				processInputOneStudent(inputList, jObj);
 
 				jsonCount++;
 			}
@@ -94,9 +102,10 @@ public class DataPreProcessing {
 	}
 	
 	/**
-	 * Used for data preprocessing for message retrieval in Brain
-	 * @param inputOneStudent
-	 * @return
+	 * Used for data preprocessing for message retrieval in Brain.
+	 * Pre-processes the input data for one student by converting values to doubles.
+	 * @param inputOneStudent	Input from the plug-in for one input row of data for one student
+	 * @return	List<double[]> containing the pre-processed values for one row of data for one student
 	 */
 	public static List<double[]> processJSONObject(JSONObject inputOneStudent) {
 		/**
@@ -108,25 +117,35 @@ public class DataPreProcessing {
 		return inputList;
 	}
 	
+	/**
+	 * Helper method to pre-process the input for one data row from one student
+	 * @param inputDataList		The result from processJSONObject
+	 * @param inputOneStudent	Input from the plug-in for one input row of data for one student
+	 */
 	public static void processInputOneStudent(List<double[]> inputDataList, JSONObject inputOneStudent) {
 		//int studentId = inputOneStudent.getInt("studentId");
 		/**
 		 * @TODO: How to get this value from JSON???
 		 */
-		// Action action;	
 		// String assignmentName;
+		setAction(inputOneStudent.getString("action"));
 		setLinesOfCodeTotal(inputOneStudent.getInt("linesOfCodeTotal"));
 		setKeywordComparatorFound(inputOneStudent.getInt("keywordComparatorFound"));
 		setKeywordNewFound(inputOneStudent.getInt("keywordNewFound"));
 		setKeywordDoubleFound(inputOneStudent.getInt("keywordDoubleFound"));
-		setKeywordDoubleFound(inputOneStudent.getInt("keyWordFloatFound"));
+		setKeywordFloatFound(inputOneStudent.getInt("keyWordFloatFound"));
 		setKeywordIfFound(inputOneStudent.getInt("keywordIfFound"));
 		setKeywordForWhileDoFound(inputOneStudent.getInt("keywordForWhileDoFound"));
 		setKeywordReturnFound(inputOneStudent.getInt("keywordReturnFound"));
 		setNumberOfCommentLines(inputOneStudent.getInt("numberOfCommentLines"));
 		setLinesOfCodeChangedSinceLastRun(inputOneStudent.getInt("linesOfCodeChangedSinceLastRun"));
 
-		setErrorType(inputOneStudent.getString("errorType"));
+		if (!inputOneStudent.isNull("errorType")) {
+			setErrorType(inputOneStudent.getString("errorType"));
+		}
+		else {
+			setErrorType("Null");
+		}
 		setErrorTotal(inputOneStudent.getInt("errorTotal"));
 		setNumberRunAttempts(inputOneStudent.getInt("numberRunAttempts"));
 		setRunAttemptsSinceLastHint(inputOneStudent.getInt("runAttemptsSinceLastHint"));
@@ -158,6 +177,7 @@ public class DataPreProcessing {
 		// ---------------------------
 		
 		inputDataList.add(new double[] {
+				getAction(),
 				getLinesOfCodeTotal(),
 				getKeywordComparatorFound(),
 				getKeywordNewFound(),
@@ -172,12 +192,21 @@ public class DataPreProcessing {
 				getErrorTotal(),
 				getNumberRunAttempts(),
 				getRunAttemptsSinceLastHint(),
+				/**
+				 * @TODO
+				 */
 				//this.submissionDateTime,
 				getAssignmentCompletedSuccessfully(),
-				getErrorCountSinceLastHint(),
+				getErrorCountSinceLastHint()
 		});
 	}
 	
+	/**
+	 * Creates the 2D double array for input to the neural network for training
+	 * @param inputListData 	Result from processJSONArray(): contains the 
+	 * 							list of pre-processed values as doubles
+	 * @return	2D double array of all students' input data to be used as input to NN
+	 */
 	public double[][] addInputDataToArray(List<double[]> inputListData) {
 		/**
 		 * @TODO: Consider what to do when size is 0
@@ -198,21 +227,54 @@ public class DataPreProcessing {
 		return inputArray;
 	}
 	
-
+	/**
+	 * Maps each action input to an appropriate value in the HashMap
+	 * @TODO: Not sure if all these conditions are needed for actions
+	 * @param actionInput
+	 */
+	public static void setAction(Constants.Action actionInput) {
+		Map<String, Double> actionsCodes = Constants.ACTIONS;
+		if (actionInput == Constants.Action.DEBUG) {
+			action = lookUpActionCode("Debug", actionsCodes);
+		}
+		else if (actionInput == Constants.Action.ERROR) {
+			action = lookUpActionCode("Error", actionsCodes);
+		}
+		else if (actionInput == Constants.Action.HELP) {
+			action = lookUpActionCode("Help", actionsCodes);
+		}
+		else if (actionInput == Constants.Action.RUN) {
+			action = lookUpActionCode("Run", actionsCodes);
+		}
+		else if (actionInput == Constants.Action.SUBMIT) {
+			action = lookUpActionCode("Submit", actionsCodes);
+		}
+		else if (actionInput == Constants.Action.TIMER) {
+			action = lookUpActionCode("Timer", actionsCodes);
+		}
+	}
+	
+	/**
+	 * Helper method to find the double value corresponding to the action
+	 * @param actionInput
+	 * @param actionsCodes
+	 * @return
+	 */
+	public static double lookUpActionCode(String actionInput, Map<String, Double> actionsCodes) {
+		if (actionsCodes.containsKey(actionInput)) {
+			return actionsCodes.get(actionInput);
+		}
+		else {
+			return 0.0;
+		}
+	}
+	
 	public double getStudentId() {
 		return studentId;
 	}
 
 	public void setStudentId(double studentId) {
 		this.studentId = studentId;
-	}
-
-	public double getAction() {
-		return action;
-	}
-
-	public void setAction(double action) {
-		this.action = action;
 	}
 
 	public double getAssignmentName() {
@@ -307,6 +369,11 @@ public class DataPreProcessing {
 		return errorType;
 	}
 
+	/**
+	 * @TODO: Update to handle all string inputs received from plug-in
+	 * Calculates the double value for the error message received from plug-in
+	 * @param errorTypeInput	The error message received from plug-in
+	 */
 	public static void setErrorType(String errorTypeInput) {
 		Map<String, Double> errorCodes = Constants.ERROR_MESSAGES;
 		double errorValue;
@@ -347,16 +414,16 @@ public class DataPreProcessing {
 		return submissionDateTime;
 	}
 
-	public static void setSubmissionDateTime(double submissionDateTime) {
-		submissionDateTime = submissionDateTime;
+	public static void setSubmissionDateTime(double submissionDateTimeInput) {
+		submissionDateTime = submissionDateTimeInput;
 	}
 
 	public static double getAssignmentCompletedSuccessfully() {
 		return assignmentCompletedSuccessfully;
 	}
 
-	public static void setAssignmentCompletedSuccessfully(double assignmentCompletedSuccessfully) {
-		assignmentCompletedSuccessfully = assignmentCompletedSuccessfully;
+	public static void setAssignmentCompletedSuccessfully(double assignmentCompletedSuccessfullyInput) {
+		assignmentCompletedSuccessfully = assignmentCompletedSuccessfullyInput;
 	}
 
 	public static double getErrorCountSinceLastHint() {
@@ -371,112 +438,52 @@ public class DataPreProcessing {
 		return messageGiven;
 	}
 
-	public static void setMessageGiven(double messageGiven) {
-		messageGiven = messageGiven;
+	public static void setMessageGiven(double messageGivenInput) {
+		messageGiven = messageGivenInput;
 	}
 
 	public double getMessageCode() {
 		return messageCode;
 	}
 
-	public static void setMessageCode(double messageCode) {
-		messageCode = messageCode;
+	public static void setMessageCode(double messageCodeInput) {
+		messageCode = messageCodeInput;
 	}
 
 	public static double getFeedbackSurvey() {
 		return feedbackSurvey;
 	}
 
-	public static void setFeedbackSurvey(double feedbackSurvey) {
-		feedbackSurvey = feedbackSurvey;
+	public static void setFeedbackSurvey(double feedbackSurveyInput) {
+		feedbackSurvey = feedbackSurveyInput;
 	}
 
 	public static double getCyclomaticComplexity() {
 		return cyclomaticComplexity;
 	}
 
-	public static void setCyclomaticComplexity(double cyclomaticComplexity) {
-		cyclomaticComplexity = cyclomaticComplexity;
+	public static void setCyclomaticComplexity(double cyclomaticComplexityInput) {
+		cyclomaticComplexity = cyclomaticComplexityInput;
 	}
 
-	public static double getTimerValue() {
-		return timerValue;
+	public static void setKeywordFloatFound(int keyWordFloatFoundInput) {
+		keyWordFloatFound = keyWordFloatFoundInput;
 	}
-
-	public static void setTimerValue(double timerValue) {
-		timerValue = timerValue;
+	
+	public static void setAction(String actionInput) {
+		Map<String, Double> actionCodes = Constants.ACTIONS;
+		double actionValue;
+		if (actionCodes.containsKey(actionInput)) {
+			actionValue = actionCodes.get(actionInput);
+		}
+		else {
+			actionValue = 0.0;
+		}
+		action = actionValue;
 	}
-
-	public static double getTimeSinceLastRun() {
-		return timeSinceLastRun;
-	}
-
-	public static void setTimeSinceLastRun(double timeSinceLastRun) {
-		timeSinceLastRun = timeSinceLastRun;
-	}
-
-	public static double getTimeIdle() {
-		return timeIdle;
-	}
-
-	public static void setTimeIdle(double timeIdle) {
-		timeIdle = timeIdle;
-	}
-
-	public static double getTimeTotal() {
-		return timeTotal;
-	}
-
-	public static void setTimeTotal(double timeTotal) {
-		timeTotal = timeTotal;
-	}
-
-	public static double getTimeWorking() {
-		return timeWorking;
-	}
-
-	public static void setTimeWorking(double timeWorking) {
-		timeWorking = timeWorking;
-	}
-
-	public static double getTimeWithErrors() {
-		return timeWithErrors;
-	}
-
-	public static void setTimeWithErrors(double timeWithErrors) {
-		timeWithErrors = timeWithErrors;
-	}
-
-	public static double getTimeUntilErrorFixed() {
-		return timeUntilErrorFixed;
-	}
-
-	public static void setTimeUntilErrorFixed(double timeUntilErrorFixed) {
-		timeUntilErrorFixed = timeUntilErrorFixed;
-	}
-
-	public static double getTimeSinceLastHint() {
-		return timeSinceLastHint;
-	}
-
-	public static void setTimeSinceLastHint(double timeSinceLastHint) {
-		timeSinceLastHint = timeSinceLastHint;
-	}
-
-	public static double getTimeMostRecentHint() {
-		return timeMostRecentHint;
-	}
-
-	public static void setTimeMostRecentHint(double timeMostRecentHint) {
-		timeMostRecentHint = timeMostRecentHint;
-	}
-
-	public static double getTimeSecondMostRecentHint() {
-		return timeSecondMostRecentHint;
-	}
-
-	public static void setTimeSecondMostRecentHint(double timeSecondMostRecentHint) {
-		timeSecondMostRecentHint = timeSecondMostRecentHint;
+	
+	public static double getAction() {
+		return action;
 	}
 
 	public double[][] getStudentDataInput() {

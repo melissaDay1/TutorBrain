@@ -8,10 +8,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class TempConnection_LocalDB {
+public class LocalDB_TempConnection {
 	private Connection dbConnection = null;
 
-	public TempConnection_LocalDB() {
+	public LocalDB_TempConnection() {
 		this.setDBConnection("jdbc:mysql://localhost:3306/tutorData?useSSL=false", "melissa", "");
 
 	}

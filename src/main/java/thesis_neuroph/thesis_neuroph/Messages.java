@@ -2,17 +2,24 @@ package thesis_neuroph.thesis_neuroph;
 
 import java.util.HashMap;
 
+/**
+ * Messages to be given from the Brain to th plug-in
+ * @author Melissa
+ *
+ */
+
 public class Messages {
 	private HashMap<Integer, String> messages;
 	
 	/**
 	 * TODO: Change messages
 	 */
-	private String hint1 = "Add main";
-	private String hint2 = "Add new";
-	private String hint3 = "Use 'if'";
-	private String hint4 = "I don't know how to help you";
-	private String hint5 = "Add more methods";
+	private String noReturn = "Remember to return a value.";
+	private String success = "Way to go! You finished!";
+	private String noLoops = "Recursion means no loops should be used.";
+	private String noCodeWritten = "It doesn't look like you've written any code "
+			+ "yet. Re-think that before you click that button.";
+	private String help = "How can I help you?";
 	private String hint6 = "Use a double data type";
 	private String hint7 = "Use comparator operator";
 	
@@ -21,12 +28,15 @@ public class Messages {
 		this.setMessages();
 	}
 
+	/**
+	 * Sets the HashMap with the key-value pairs for the messages
+	 */
 	public void setMessages() {
-		messages.put(10, hint1);
-		messages.put(20, hint2);
-		messages.put(30, hint3);
-		messages.put(40, hint4);
-		messages.put(50, hint5);
+		messages.put(10, noReturn);
+		messages.put(20, success);
+		messages.put(30, noLoops);
+		messages.put(40, noCodeWritten);
+		messages.put(50, help);
 		messages.put(60, hint6);
 		messages.put(70, hint7);
 	}
@@ -34,7 +44,4 @@ public class Messages {
 	public HashMap<Integer, String> getMessages() {
 		return messages;
 	}
-	
-	
-
 }

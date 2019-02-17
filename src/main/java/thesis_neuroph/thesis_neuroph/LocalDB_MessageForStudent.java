@@ -16,7 +16,7 @@ import org.neuroph.util.data.norm.Normalizer;
  * @author Melissa
  *
  */
-public class MessageForStudent_LocalDB {
+public class LocalDB_MessageForStudent {
 	private String messageForStudent;
 	private double[] nnOutput;
 
@@ -27,7 +27,7 @@ public class MessageForStudent_LocalDB {
 	 * @param studentID
 	 * @param tableName
 	 */
-	public MessageForStudent_LocalDB(NN_LocalDB neuralNetworkForTutor, Connection connectionToDB, int studentID, String tableName) {
+	public LocalDB_MessageForStudent(LocalDB_NN neuralNetworkForTutor, Connection connectionToDB, int studentID, String tableName) {
 		Messages messageOptions = new Messages();
 		String queryForStudent = "select * from " + tableName + " where id = " + studentID;
 		/**

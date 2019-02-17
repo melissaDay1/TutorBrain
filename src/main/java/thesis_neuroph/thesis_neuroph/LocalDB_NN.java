@@ -46,7 +46,7 @@ import org.neuroph.util.random.WeightsRandomizer;
  * @source: Adapted from http://www.ntu.edu.sg/home/ehchua/programming/java/jdbc_basic.html
  * 
  */
-public class NN_LocalDB implements LearningEventListener {
+public class LocalDB_NN implements LearningEventListener {
 
 	/**
 	 * TODO Make variables private and add setters
@@ -73,7 +73,7 @@ public class NN_LocalDB implements LearningEventListener {
 						{0.4},
 						{0.7}};
 
-	public NN_LocalDB(Connection connectionToDB) {
+	public LocalDB_NN(Connection connectionToDB) {
 		String query = "select * from dummyData";
 		List<double[]> data = this.processInputFromDB(connectionToDB, query);
 		double[][] inputArrayTest = this.addInputDataToArray(data);

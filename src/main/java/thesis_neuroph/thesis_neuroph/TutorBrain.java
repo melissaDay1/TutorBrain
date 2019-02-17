@@ -19,7 +19,7 @@ public class TutorBrain {
 	}
 	
 	/**
-	 * Used when Neural Network will be trained
+	 * Used when you need to train the Neural Network
 	 * @param serverInput
 	 */
 	public TutorBrain(JSONArray serverInput) {
@@ -33,21 +33,18 @@ public class TutorBrain {
 		this.setMessageFromBrain(messageInfo.getMessageForStudent());
 	}
 	
-	public String getMessage(JSONObject dataForOneStudent) {
+	public JSONObject getMessage(JSONObject dataForOneStudent) {
+		JSONObject messageObject = new JSONObject();
 		this.calculateMessage(dataForOneStudent);
-		return this.getMessageFromBrain();
+		String message = this.getMessageFromBrain();
+		int messageCode = this.getMessageCodeFromBrain();
+		
+		messageObject.put("message", message);
+		messageObject.put("messageCode", messageCode);
+		
+		return messageObject;
 	}
 	
-	public int getMessageCode(JSONObject dataForOneStudent) {
-		if (this.getMessageCodeFromBrain() < 0) {
-			this.calculateMessage(dataForOneStudent);
-			return this.getMessageCodeFromBrain();
-		}
-		else {
-			return this.getMessageCodeFromBrain();
-		}
-	}
-
 	protected String getMessageFromBrain() {
 		return messageFromBrain;
 	}
