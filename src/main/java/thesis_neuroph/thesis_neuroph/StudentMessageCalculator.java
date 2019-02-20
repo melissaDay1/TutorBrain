@@ -16,7 +16,6 @@ public class StudentMessageCalculator {
 	private int messageCode;
 
 	/**
-	 * @TODO: When connection is established from plug-in side, can delete the NN parameter
 	 * @param neuralNetworkForTutor
 	 * @param connectionToDB
 	 * @param studentID
@@ -35,8 +34,13 @@ public class StudentMessageCalculator {
 		}
 		
 		long msgCode = this.calculateMessageCode();
-		this.setMessageToDisplay(messageOptions, msgCode);
-		this.setMessageCode(msgCode);
+		/**
+		 * @TODO: Uncomment when doing the training
+		 */
+		//this.setMessageToDisplay(messageOptions, msgCode);
+		//this.setMessageCode(msgCode);
+		this.setMessageToDisplay(messageOptions, 60);
+		this.setMessageCode(60);
 		System.out.println("Message Code: " + msgCode);
 		System.out.println("Message for Student: " + this.getMessageForStudent());
 	}
@@ -97,7 +101,8 @@ public class StudentMessageCalculator {
 	}
 	
 	public void setMessageToDisplay(Messages messagesChoices, long messageCode) {
-		String message = messagesChoices.getMessages().get((int) messageCode);
+		String message = Constants.MESSAGES_BY_NUM.get((int) messageCode);
+		//String message = messagesChoices.getMessages().get((int) messageCode);
 		this.setMessageForStudent(message);
 	}
 

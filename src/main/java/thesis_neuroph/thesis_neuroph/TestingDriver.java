@@ -15,7 +15,7 @@ import org.json.JSONObject;
  *
  */
 public class TestingDriver {
-	//public static void main(String[] args) {
+	public static void main(String[] args) {
 		// Used for testing local MySQL DB neural network message generation without Server connection
 		/*TempConnection dbConnection = new TempConnection();
 		NN neuralNetwork = new NN(dbConnection.getDbConnection());
@@ -28,7 +28,7 @@ public class TestingDriver {
 		/**
 		 * @TODO: Remove this connection when integrating Brain with plug-in
 		 */
-		/*ServerConnection serverConn = new ServerConnection();
+		ServerConnection serverConn = new ServerConnection();
 		try {
 			JSONArray jsonArrayData = serverConn.getStudentData();
 			JSONObject studentObj1 = serverConn.getDataOneStudent(jsonArrayData, 0);
@@ -36,7 +36,7 @@ public class TestingDriver {
 			JSONObject studentObj3 = serverConn.getDataOneStudent(jsonArrayData, 2);
 			JSONObject studentObj4 = serverConn.getDataOneStudent(jsonArrayData, 3);
 			JSONObject studentObj5 = serverConn.getDataOneStudent(jsonArrayData, 4);
-			JSONObject studentObj6 = serverConn.getDataOneStudent(jsonArrayData, 5);*/
+			JSONObject studentObj6 = serverConn.getDataOneStudent(jsonArrayData, 5);
 
 
 			/**
@@ -47,16 +47,16 @@ public class TestingDriver {
 			 * @TODO: Remove this section when integrating with plug-in
 			 * Plug-in assumes that a trained NN already exists
 			 */
-			//NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayData);
+			NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayData);
 			/**
 			 * @TODO: End part to delete
 			 */
 			
-			/*TutorBrain brain = new TutorBrain();
+			TutorBrain brain = new TutorBrain();
 			JSONObject messageObj1 = brain.getMessage(studentObj1);
 			System.out.println("\n" + messageObj1.toString());
 			
-			JSONObject messageObj2 = brain.getMessage(studentObj2);
+			/*JSONObject messageObj2 = brain.getMessage(studentObj2);
 			System.out.println("\n" + messageObj2.toString());
 			
 			JSONObject messageObj3 = brain.getMessage(studentObj3);
@@ -69,7 +69,7 @@ public class TestingDriver {
 			System.out.println("\n" + messageObj5.toString());
 			
 			JSONObject messageObj6 = brain.getMessage(studentObj6);
-			System.out.println("\n" + messageObj6.toString());
+			System.out.println("\n" + messageObj6.toString()); */
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,5 +79,5 @@ public class TestingDriver {
 		}
 		
 		
-	}*/
+	}
 }

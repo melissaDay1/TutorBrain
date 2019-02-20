@@ -23,9 +23,6 @@ public class DataPreProcessing {
 	 * @TODO: Probably won't send these to NN
 	 */
 	private double[][] studentDataInput;
-	private double studentId;
-	private double assignmentName;
-
 	
 	private static double action;
 	private static double linesOfCodeTotal;
@@ -37,27 +34,13 @@ public class DataPreProcessing {
 	private static double keywordForWhileDoFound;
 	private static double keywordReturnFound;
 	private static double numberOfCommentLines;
-	private static double linesOfCodeChangedSinceLastRun;
 	private static double errorType;
-	private static double errorTotal;
-	private static double numberRunAttempts;
-	private static double runAttemptsSinceLastHint;
 	private static double submissionDateTime;
 	private static double assignmentCompletedSuccessfully;
-	private static double errorCountSinceLastHint;
 	private static double messageGiven;
 	private static double messageCode;
 	private static double feedbackSurvey;
-	
-
-	/**
-	 * @TODO:
-	 */
-	// In Review
-	//---------------------------
 	private static double cyclomaticComplexity;
-
-	// ---------------------------
 
 	/**
 	 * Handles all data pre-processing for input to the NN.
@@ -123,12 +106,12 @@ public class DataPreProcessing {
 	 * @param inputOneStudent	Input from the plug-in for one input row of data for one student
 	 */
 	public static void processInputOneStudent(List<double[]> inputDataList, JSONObject inputOneStudent) {
-		//int studentId = inputOneStudent.getInt("studentId");
-		/**
-		 * @TODO: How to get this value from JSON???
-		 */
-		// String assignmentName;
-		setAction(inputOneStudent.getString("action"));
+		if (!inputOneStudent.isNull("action")) {
+			setAction(inputOneStudent.getString("action"));
+		}
+		else {
+			setAction("Null");
+		}
 		setLinesOfCodeTotal(inputOneStudent.getInt("linesOfCodeTotal"));
 		setKeywordComparatorFound(inputOneStudent.getInt("keywordComparatorFound"));
 		setKeywordNewFound(inputOneStudent.getInt("keywordNewFound"));
@@ -138,7 +121,6 @@ public class DataPreProcessing {
 		setKeywordForWhileDoFound(inputOneStudent.getInt("keywordForWhileDoFound"));
 		setKeywordReturnFound(inputOneStudent.getInt("keywordReturnFound"));
 		setNumberOfCommentLines(inputOneStudent.getInt("numberOfCommentLines"));
-		setLinesOfCodeChangedSinceLastRun(inputOneStudent.getInt("linesOfCodeChangedSinceLastRun"));
 
 		if (!inputOneStudent.isNull("errorType")) {
 			setErrorType(inputOneStudent.getString("errorType"));
@@ -146,35 +128,20 @@ public class DataPreProcessing {
 		else {
 			setErrorType("Null");
 		}
-		setErrorTotal(inputOneStudent.getInt("errorTotal"));
-		setNumberRunAttempts(inputOneStudent.getInt("numberRunAttempts"));
-		setRunAttemptsSinceLastHint(inputOneStudent.getInt("runAttemptsSinceLastHint"));
-		/**
-		 * @TODO: Figure out how to get the date from JObject
-		 */
-		// Date submissionDateTime = jObj.getDate("submissionDateTime");
-
+		
 		setAssignmentCompletedSuccessfully(inputOneStudent.getInt("assignmentCompletedSuccessfully"));
+		
+		if (!inputOneStudent.isNull("messageGiven")) {
+			setMessageGiven(inputOneStudent.getString("messageGiven"));
 
-		setErrorCountSinceLastHint(inputOneStudent.getInt("errorCountSinceLastHint"));
-		/**
-		 * @TODO: May need this variable later
-		 */
-		//String messageGiven = jObj.getString("messageGiven");
-		//int messageCode = jObj.getInt("messageCode");
-		//int feedbackSurvey = jObj.getInt("feedbackSurvey");
+		}
+		else {
+			setMessageGiven("Null");
+		}
+		setMessageCode(inputOneStudent.getInt("messageCode"));
+		setFeedbackSurvey(inputOneStudent.getInt("feedbackSurvey"));
+		setCyclomaticComplexity(inputOneStudent.getInt("cyclomaticComplexity"));
 
-		// In Review
-		// ---------------------------
-		/*
-		 * private int cyclomaticComplexity; private float timerValue; private float
-		 * timeSinceLastRun; private float timeIdle; private float timeTotal; private
-		 * float timeWorking; private float timeWithErrors; private float
-		 * timeUntilErrorFixed; private float timeSinceLastHint; private float
-		 * timeMostRecentHint; private float timeSecondMostRecentHint;
-		 */
-
-		// ---------------------------
 		
 		inputDataList.add(new double[] {
 				getAction(),
@@ -187,17 +154,12 @@ public class DataPreProcessing {
 				getKeywordForWhileDoFound(),
 				getKeywordReturnFound(),
 				getNumberOfCommentLines(),
-				getLinesOfCodeChangedSinceLastRun(),
 				getErrorType(),
-				getErrorTotal(),
-				getNumberRunAttempts(),
-				getRunAttemptsSinceLastHint(),
-				/**
-				 * @TODO
-				 */
-				//this.submissionDateTime,
 				getAssignmentCompletedSuccessfully(),
-				getErrorCountSinceLastHint()
+				getMessageGiven(),
+				getMessageCode(),
+				getFeedbackSurvey(),
+				getCyclomaticComplexity(),
 		});
 	}
 	
@@ -208,22 +170,22 @@ public class DataPreProcessing {
 	 * @return	2D double array of all students' input data to be used as input to NN
 	 */
 	public double[][] addInputDataToArray(List<double[]> inputListData) {
+		double[][] inputArray;
 		/**
 		 * @TODO: Consider what to do when size is 0
 		 */
 		if (inputListData.size() == 0) {
-			
+			inputArray = new double[1][1]; 
+			System.out.println("No input from Server");
 		}
-		double[] element = inputListData.get(0);
-		
-		/**
-		 * @TODO: Create with Factory pattern/class??
-		 */
-		double[][] inputArray = new double[inputListData.size()][element.length];
-		inputArray = inputListData.toArray(inputArray);
-		/*for (double[] d : inputArray) {
-			System.out.print(Arrays.toString(d));
-		}*/
+		else {
+			double[] element = inputListData.get(0);
+			inputArray = new double[inputListData.size()][element.length];
+			inputArray = inputListData.toArray(inputArray);
+			/*for (double[] d : inputArray) {
+				System.out.print(Arrays.toString(d));
+			}*/
+		}
 		return inputArray;
 	}
 	
@@ -269,22 +231,6 @@ public class DataPreProcessing {
 		}
 	}
 	
-	public double getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(double studentId) {
-		this.studentId = studentId;
-	}
-
-	public double getAssignmentName() {
-		return assignmentName;
-	}
-
-	public void setAssignmentName(double assignmentName) {
-		this.assignmentName = assignmentName;
-	}
-
 	public static double getLinesOfCodeTotal() {
 		return linesOfCodeTotal;
 	}
@@ -357,14 +303,6 @@ public class DataPreProcessing {
 		numberOfCommentLines = numberOfCommentLinesInput;
 	}
 
-	public static double getLinesOfCodeChangedSinceLastRun() {
-		return linesOfCodeChangedSinceLastRun;
-	}
-
-	public static void setLinesOfCodeChangedSinceLastRun(int linesOfCodeChangedSinceLastRunInput) {
-		linesOfCodeChangedSinceLastRun = linesOfCodeChangedSinceLastRunInput;
-	}
-
 	public static double getErrorType() {
 		return errorType;
 	}
@@ -386,30 +324,6 @@ public class DataPreProcessing {
 		errorType = errorValue;
 	}
 
-	public static double getErrorTotal() {
-		return errorTotal;
-	}
-
-	public static void setErrorTotal(int errorTotalInput) {
-		errorTotal = errorTotalInput;
-	}
-
-	public static double getNumberRunAttempts() {
-		return numberRunAttempts;
-	}
-
-	public static void setNumberRunAttempts(int numberRunAttemptsInput) {
-		numberRunAttempts = numberRunAttemptsInput;
-	}
-
-	public static double getRunAttemptsSinceLastHint() {
-		return runAttemptsSinceLastHint;
-	}
-
-	public static void setRunAttemptsSinceLastHint(int runAttemptsSinceLastHintInput) {
-		runAttemptsSinceLastHint = runAttemptsSinceLastHintInput;
-	}
-
 	public static double getSubmissionDateTime() {
 		return submissionDateTime;
 	}
@@ -422,31 +336,32 @@ public class DataPreProcessing {
 		return assignmentCompletedSuccessfully;
 	}
 
-	public static void setAssignmentCompletedSuccessfully(double assignmentCompletedSuccessfullyInput) {
+	public static void setAssignmentCompletedSuccessfully(int assignmentCompletedSuccessfullyInput) {
 		assignmentCompletedSuccessfully = assignmentCompletedSuccessfullyInput;
-	}
-
-	public static double getErrorCountSinceLastHint() {
-		return errorCountSinceLastHint;
-	}
-
-	public static void setErrorCountSinceLastHint(int errorCountSinceLastHintInput) {
-		errorCountSinceLastHint = errorCountSinceLastHintInput;
 	}
 
 	public static double getMessageGiven() {
 		return messageGiven;
 	}
 
-	public static void setMessageGiven(double messageGivenInput) {
-		messageGiven = messageGivenInput;
+	public static void setMessageGiven(String messageGivenInput) {
+		Map<String, Double> messageCodes = Constants.MESSAGES_BY_STRING;
+		double messageValue;
+		if (messageCodes.containsKey(messageGivenInput)) {
+			messageValue = messageCodes.get(messageGivenInput);
+		}
+		else {
+			messageValue = 0.0;
+		}
+		
+		messageGiven = messageValue;
 	}
 
-	public double getMessageCode() {
+	public static double getMessageCode() {
 		return messageCode;
 	}
 
-	public static void setMessageCode(double messageCodeInput) {
+	public static void setMessageCode(int messageCodeInput) {
 		messageCode = messageCodeInput;
 	}
 

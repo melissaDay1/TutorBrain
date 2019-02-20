@@ -89,9 +89,9 @@ public class LocalDB_NN implements LearningEventListener {
 	public List<double[]> processInputFromDB(Connection connectionToDB, String sqlQuery) {
 		List<double[]> inputList = new ArrayList<double[]>();
 			//String password = "";
-			try (
+			try {
 					// Step 2: Allocate a 'Statement' object in the Connection
-					Statement stmt = connectionToDB.createStatement();) {
+					Statement stmt = connectionToDB.createStatement();
 				// Step 3: Execute a SQL SELECT query, the query result
 				// is returned in a 'ResultSet' object.
 				//String strSelect = "select * from " + tableName;

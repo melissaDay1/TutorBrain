@@ -20,7 +20,7 @@ public class Messages {
 	private String noCodeWritten = "It doesn't look like you've written any code "
 			+ "yet. Re-think that before you click that button.";
 	private String help = "How can I help you?";
-	private String hint6 = "Use a double data type";
+	private String cannotHelp = "I'm sorry, I am not able to help you right now.";
 	private String hint7 = "Use comparator operator";
 	
 	public Messages() {
@@ -37,7 +37,7 @@ public class Messages {
 		messages.put(30, noLoops);
 		messages.put(40, noCodeWritten);
 		messages.put(50, help);
-		messages.put(60, hint6);
+		messages.put(60, cannotHelp);
 		messages.put(70, hint7);
 	}
 
