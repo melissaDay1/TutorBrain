@@ -125,7 +125,7 @@ public class NeuralNetworkBrain implements LearningEventListener {
 
         // save trained neural network
         mlPerceptron.save(Constants.NEURAL_NETWORK_NAME);
-
+       // classLoader.getResource("toolbar-icons/" + EditorConstants.TOOL_MENU_RESOURCES[i] + ".png")
         // load saved neural network
        //NeuralNetwork loadedMlPerceptron = NeuralNetwork.createFromFile(Constants.NEURAL_NETWORK_NAME);
 
@@ -152,7 +152,7 @@ public class NeuralNetworkBrain implements LearningEventListener {
         }
     }
 
-	@Override
+	//@Override
 	/**
 	 * @Source: https://github.com/neuroph/neuroph/blob/master/neuroph-2.9/Samples/src/main/java/org/neuroph/samples/XorMultiLayerPerceptronSample.java
 	 */

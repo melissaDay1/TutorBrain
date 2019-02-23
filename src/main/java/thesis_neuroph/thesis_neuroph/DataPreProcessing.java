@@ -35,9 +35,9 @@ public class DataPreProcessing {
 	private static double keywordReturnFound;
 	private static double numberOfCommentLines;
 	private static double errorType;
-	private static double submissionDateTime;
+	private static double submissionDateTime; // not sent to NN
 	private static double assignmentCompletedSuccessfully;
-	private static double messageGiven;
+	private static double messageGiven; 
 	private static double messageCode;
 	private static double feedbackSurvey;
 	private static double cyclomaticComplexity;

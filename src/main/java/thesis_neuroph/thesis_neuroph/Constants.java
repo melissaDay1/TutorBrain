@@ -70,7 +70,7 @@ public class Constants {
 		return Collections.unmodifiableMap(messages);
 	}
 
-	//private static int numberInputNodesToNN = 0;
+	public static final int NUMBER_INPUT_NODES_TO_NN = 16;
 	public static final double[][] EXPECTED_OUTPUT_FROM_NN = {{40},
 											{40},
 											{50},
@@ -84,7 +84,9 @@ public class Constants {
 	public static final double MAX_ERROR = 0.00001;
 	public static final int MAX_ITERATIONS = 10000;
 	
-	public static final String NEURAL_NETWORK_NAME = "trainedTutorData.nnet";
+	public static final String NEURAL_NETWORK_NAME = "C:\\Users\\Melissa\\Documents\\"
+			+ "Software_Engineering_Degree\\Thesis\\Code\\"
+			+ "TutorBrain\\src\\main\\java\\resources\\" + "TutorData" + ".nnet";
 	
 	public enum Action {
 		TIMER,

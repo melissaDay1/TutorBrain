@@ -30,7 +30,8 @@ public class StudentMessageCalculator {
 		if (!data.isEmpty()) {
 			double[] element = data.get(0);
 			this.loadNeuralNetwork(Constants.NEURAL_NETWORK_NAME, 
-					element, NeuralNetworkBrain.getNumberInputNodes());
+					element, Constants.NUMBER_INPUT_NODES_TO_NN);
+			System.out.println("Neural network loaded successfully");
 		}
 		
 		long msgCode = this.calculateMessageCode();
