@@ -89,7 +89,6 @@ public class Constants {
 			+ "TutorBrain\\src\\main\\java\\resources\\" + "TutorData" + ".nnet";
 	
 	public enum Action {
-		TIMER,
 		RUN,
 		DEBUG,
 		ERROR,

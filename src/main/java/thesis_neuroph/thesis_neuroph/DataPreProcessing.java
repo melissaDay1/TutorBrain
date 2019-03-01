@@ -211,9 +211,6 @@ public class DataPreProcessing {
 		else if (actionInput == Constants.Action.SUBMIT) {
 			action = lookUpActionCode("Submit", actionsCodes);
 		}
-		else if (actionInput == Constants.Action.TIMER) {
-			action = lookUpActionCode("Timer", actionsCodes);
-		}
 	}
 	
 	/**
