@@ -211,9 +211,6 @@ public class DataPreProcessing {
 		else if (actionInput == Constants.Action.SUBMIT) {
 			action = lookUpActionCode("Submit", actionsCodes);
 		}
-		else if (actionInput == Constants.Action.TIMER) {
-			action = lookUpActionCode("Timer", actionsCodes);
-		}
 	}
 	
 	/**
@@ -308,20 +305,61 @@ public class DataPreProcessing {
 	}
 
 	/**
-	 * @TODO: Update to handle all string inputs received from plug-in
 	 * Calculates the double value for the error message received from plug-in
 	 * @param errorTypeInput	The error message received from plug-in
 	 */
 	public static void setErrorType(String errorTypeInput) {
+		String[] errorMsgNameArray = Constants.ERROR_MESSAGE_NAMES;
+		String errorName = findMatchingErrorName(errorTypeInput, errorMsgNameArray);
 		Map<String, Double> errorCodes = Constants.ERROR_MESSAGES;
 		double errorValue;
-		if (errorCodes.containsKey(errorTypeInput)) {
-			errorValue = errorCodes.get(errorTypeInput);
+		if (errorCodes.containsKey(errorName)) {
+			errorValue = errorCodes.get(errorName);
 		}
 		else {
 			errorValue = 0.0;
 		}
 		errorType = errorValue;
+	}
+	
+	/**
+	 * Finds the error message name stored in the Brain's Constant's file that
+	 * corresponds with the error message collected from console.
+	 * If there is an error, but the name isn't found, it's set to "other".
+	 * If there is no error, it's set to "none".
+	 * @param errorTypeInput	error message collected from console in the plug-in
+	 * @return					The corresponding string for the error message name in constants file
+	 */
+	public static String findMatchingErrorName(String errorTypeInput, String[] errorNames) {
+		String nameForErrorInput = null;
+		String errorInput;
+		if (errorTypeInput != null && errorTypeInput != "Null") {
+			errorInput = errorTypeInput.toLowerCase();
+			// Strip punctuation from error message collected from console
+			errorInput = errorInput.replaceAll("\\s+", "");
+			errorInput = errorInput.replaceAll("\"", "");
+			errorInput = errorInput.replaceAll(".", "");
+
+			
+			for (int i = 0; i < errorNames.length; i++) {
+				String currName = errorNames[i].toLowerCase();
+				if (currName.contains(errorInput)) {
+					nameForErrorInput = errorNames[i];
+					break;
+				}
+			}
+			// name of error message has not been set yet
+			if (nameForErrorInput == null) {
+				// Sets "other" error message if name of error message isn't in Constants array
+				nameForErrorInput = Constants.OTHER_ERROR;
+			}
+			return nameForErrorInput;
+		}
+		else {
+			// Sets error message name to "none"
+			nameForErrorInput = Constants.NONE_ERROR;
+			return nameForErrorInput;
+		}
 	}
 
 	public static double getSubmissionDateTime() {

@@ -24,19 +24,13 @@ import org.neuroph.util.random.WeightsRandomizer;
 
 
 public class NeuralNetworkBrain implements LearningEventListener {
-
-	/*double linesOfCodeTotal;
-	double numberOfMethods;
-	double keywordMainFound;
-	double keywordComparatorFound;
-	double keywordNewFound;
-	double keywordDoubleFound;
-	double keywordFloatFound;
-	double outputExpected; */
 	
 	private static int numberInputNodes;
 	
-
+	/**
+	 * Used for reading data from Server
+	 * @param serverInput
+	 */
 	public NeuralNetworkBrain(JSONArray serverInput) {
 		/**
 		 * @TODO: Implement Factory pattern
@@ -54,8 +48,12 @@ public class NeuralNetworkBrain implements LearningEventListener {
 		// Used for initially creating/saving the NN
 		this.trainNeuralNet(preprocessedData.getStudentDataInput());
 	}
-
 	
+	
+	public static void createTrainedNeuralNetwork(JSONArray serverInput) {
+		NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(serverInput);
+	}
+
 	public MultiLayerPerceptron setNN() {
 		// create multi layer perceptron
         MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID,
@@ -85,7 +83,7 @@ public class NeuralNetworkBrain implements LearningEventListener {
 		// create training set
 		DataSet trainingSet = new DataSet(numberInputNodes, 1); 
 		/**
-		 * @TODO: Process all input - this is just testing for 1 element
+		 * @TODO: Process all input
 		 */
 		for (int i = 0; i < input.length; i++) {
 			trainingSet.addRow(new DataSetRow(
@@ -94,6 +92,7 @@ public class NeuralNetworkBrain implements LearningEventListener {
 		
 		return trainingSet;
 	}
+	
 	
 	/**
 	 * @source: https://github.com/neuroph/neuroph/blob/master/neuroph-2.9/Samples/src/main/java/org/neuroph/samples/NormalizationSample.java
@@ -122,10 +121,20 @@ public class NeuralNetworkBrain implements LearningEventListener {
         // test perceptron
         System.out.println("Testing trained neural network in TrainedNeuralNetwork class");
         testNeuralNetwork(mlPerceptron, data);
+        
+        mlPerceptron.save(Constants.NEURAL_NETWORK_NAME);
 
         // save trained neural network
-        mlPerceptron.save(Constants.NEURAL_NETWORK_NAME);
-       // classLoader.getResource("toolbar-icons/" + EditorConstants.TOOL_MENU_RESOURCES[i] + ".png")
+        //getClass().getResource(Constants.NEURAL_NETWORK_NAME);
+        
+        //ClassLoader classLoader = getClass().getClassLoader();
+        
+       // mlPerceptron.save(classLoader.getResource(Constants.NEURAL_NETWORK_NAME).getPath());
+       // ClassLoader classLoader = getClass().getClassLoader();
+		//System.out.println("Before save " + classLoader.getResource(Constants.NEURAL_NETWORK_NAME).getFile());
+
+       // mlPerceptron.save(classLoader.getResource(Constants.NEURAL_NETWORK_NAME).getFile());
+        
         // load saved neural network
        //NeuralNetwork loadedMlPerceptron = NeuralNetwork.createFromFile(Constants.NEURAL_NETWORK_NAME);
 

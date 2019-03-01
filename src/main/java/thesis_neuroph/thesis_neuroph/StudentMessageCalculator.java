@@ -1,5 +1,15 @@
 package thesis_neuroph.thesis_neuroph;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,27 +39,64 @@ public class StudentMessageCalculator {
 		List<double[]> data = DataPreProcessing.processJSONObject(dataOneStudent);
 		if (!data.isEmpty()) {
 			double[] element = data.get(0);
-			this.loadNeuralNetwork(Constants.NEURAL_NETWORK_NAME, 
-					element, Constants.NUMBER_INPUT_NODES_TO_NN);
-			System.out.println("Neural network loaded successfully");
+	        // Original code that works locally
+	        //this.loadNeuralNetwork(Constants.NEURAL_NETWORK_NAME, 
+			//		element, Constants.NUMBER_INPUT_NODES_TO_NN);
+			
+	        try {
+				URL url = new URL("https://drive.google.com/file/d/1EkD_NmNWo__6FcoFBbY3Az2go2rpCYPh/view?usp=sharing");
+				URLConnection urlConn = url.openConnection();
+				//InputStreamReader inputNnet = new InputStreamReader(url.openStream());
+				BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(
+						urlConn.getInputStream()));
+				String inputLine;
+				while ((inputLine = inputBuffer.readLine()) != null) {
+					System.out.println(inputLine);
+				}
+				inputBuffer.close();
+				
+				InputStream inputStrm = url.openStream();
+				//this.loadNeuralNetwork(inputStrm, 
+				//		element, Constants.NUMBER_INPUT_NODES_TO_NN);
+				
+				//inputStrm.close();
+	        } catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+	        //ClassLoader classLoader = getClass().getClassLoader();
+	        //System.out.println("Before load: " + classLoader.getResource(Constants.NEURAL_NETWORK_NAME).getFile());
+			//InputStream stream = new FileInputStream(classLoader.getResource(Constants.NEURAL_NETWORK_NAME).getFile());
+			//this.loadNeuralNetwork(stream, 
+			//		element, Constants.NUMBER_INPUT_NODES_TO_NN);
 		}
 		
 		long msgCode = this.calculateMessageCode();
 		/**
 		 * @TODO: Uncomment when doing the training
 		 */
-		//this.setMessageToDisplay(messageOptions, msgCode);
-		//this.setMessageCode(msgCode);
-		this.setMessageToDisplay(messageOptions, 60);
-		this.setMessageCode(60);
+		this.setMessageToDisplay(messageOptions, msgCode);
+		this.setMessageCode(msgCode);
+		/**
+		 * @TODO: Hard-coded values for testing integration
+		 */
+		//this.setMessageToDisplay(messageOptions, 60);
+		//this.setMessageCode(60);
 		System.out.println("Message Code: " + msgCode);
 		System.out.println("Message for Student: " + this.getMessageForStudent());
 	}
 
-	public double[] loadNeuralNetwork(String neuralNetworkName, double[] studentData, 
+	public double[] loadNeuralNetwork(InputStream neuralNetworkName, double[] studentData, 
 			int numInputNodes) {
+	//public double[] loadNeuralNetwork(String neuralNetworkName, double[] studentData, 
+	//			int numInputNodes) {
 		// load saved neural network
-		NeuralNetwork neuralNetwork = NeuralNetwork.createFromFile(neuralNetworkName);
+		//NeuralNetwork neuralNetwork = NeuralNetwork.createFromFile(neuralNetworkName);
+		NeuralNetwork neuralNetwork = NeuralNetwork.load(neuralNetworkName);
 
 		// test loaded neural network
 		System.out.println("Testing loaded neural network in StudentMessageCalculator:");

@@ -53,6 +53,8 @@ public class ServerConnection {
 		// Local machine URL
 		// URL url = new URL("http://localhost:8080/assignments");
 		URL url = new URL("http://localhost:8080/server/inputs");
+		
+		
 
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");

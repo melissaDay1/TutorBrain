@@ -32,22 +32,23 @@ public class TestingDriver {
 		try {
 			JSONArray jsonArrayData = serverConn.getStudentData();
 			JSONObject studentObj1 = serverConn.getDataOneStudent(jsonArrayData, 0);
-			/*JSONObject studentObj2 = serverConn.getDataOneStudent(jsonArrayData, 1);
-			JSONObject studentObj3 = serverConn.getDataOneStudent(jsonArrayData, 2);
+			JSONObject studentObj2 = serverConn.getDataOneStudent(jsonArrayData, 1);
+			/*JSONObject studentObj3 = serverConn.getDataOneStudent(jsonArrayData, 2);
 			JSONObject studentObj4 = serverConn.getDataOneStudent(jsonArrayData, 3);
-			JSONObject studentObj5 = serverConn.getDataOneStudent(jsonArrayData, 4);
-			JSONObject studentObj6 = serverConn.getDataOneStudent(jsonArrayData, 5);*/
+			JSONObject studentObj5 = serverConn.getDataOneStudent(jsonArrayData, 4);*/
+			//JSONObject studentObj6 = serverConn.getDataOneStudent(jsonArrayData, 5);
 
 
 			/**
 			 * @TODO: End part to delete
 			 */
+	
 			
 			/**
 			 * @TODO: Remove this section when integrating with plug-in
 			 * Plug-in assumes that a trained NN already exists
 			 */
-			NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayData);
+			//NeuralNetworkBrain.createTrainedNeuralNetwork(jsonArrayData);
 			/**
 			 * @TODO: End part to delete
 			 */
@@ -56,10 +57,10 @@ public class TestingDriver {
 			JSONObject messageObj1 = brain.getMessage(studentObj1);
 			System.out.println("\n" + messageObj1.toString());
 			
-			/*JSONObject messageObj2 = brain.getMessage(studentObj2);
-			System.out.println("\n" + messageObj2.toString());
+			//JSONObject messageObj2 = brain.getMessage(studentObj2);
+			//System.out.println("\n" + messageObj2.toString());
 			
-			JSONObject messageObj3 = brain.getMessage(studentObj3);
+			/*JSONObject messageObj3 = brain.getMessage(studentObj3);
 			System.out.println("\n" + messageObj3.toString());
 			
 			JSONObject messageObj4 = brain.getMessage(studentObj4);
@@ -68,8 +69,8 @@ public class TestingDriver {
 			JSONObject messageObj5 = brain.getMessage(studentObj5);
 			System.out.println("\n" + messageObj5.toString());
 			
-			JSONObject messageObj6 = brain.getMessage(studentObj6);
-			System.out.println("\n" + messageObj6.toString()); */
+			//JSONObject messageObj6 = brain.getMessage(studentObj6);*/
+			//System.out.println("\n" + messageObj6.toString()); 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,7 +78,5 @@ public class TestingDriver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
 }
