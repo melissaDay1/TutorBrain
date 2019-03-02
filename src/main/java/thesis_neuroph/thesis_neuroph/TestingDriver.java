@@ -47,7 +47,7 @@ public class TestingDriver {
 			 * @TODO: Remove this section when integrating with plug-in
 			 * Plug-in assumes that a trained NN already exists
 			 */
-			NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayData);
+			//NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayData);
 			/**
 			 * @TODO: End part to delete
 			 */

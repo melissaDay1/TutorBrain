@@ -47,12 +47,14 @@ public class ServerConnection {
 		// Local machine URL
 		// URL url = new URL("http://localhost:8080/assignments");
 
-		// Manohar AWS URL
-		// URL url = new URL("http://34.224.41.66:8080/assignments");
 
 		// Local machine URL
 		// URL url = new URL("http://localhost:8080/assignments");
-		URL url = new URL("http://localhost:8080/server/inputs");
+		//URL url = new URL("http://localhost:8080/server/inputs");
+		
+		// Melissa AWS URL
+		URL url = new URL("http://18.224.214.12:8080/server/inputs");
+
 
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
@@ -85,7 +87,11 @@ public class ServerConnection {
 	 */
 	public JSONObject getDataOneStudent(JSONArray inputJSONArray, int index) throws IOException, ParseException {
 		JSONObject studentObject;
-		URL url = new URL("http://localhost:8080/server/inputs");
+		// Local connection
+		// URL url = new URL("http://localhost:8080/server/inputs");
+		
+		// Melissa AWS URL
+		URL url = new URL("http://18.224.214.12:8080/server/inputs");
 
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
