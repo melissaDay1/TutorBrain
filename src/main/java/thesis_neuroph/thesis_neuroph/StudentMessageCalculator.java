@@ -1,5 +1,7 @@
 package thesis_neuroph.thesis_neuroph;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,27 +31,36 @@ public class StudentMessageCalculator {
 		List<double[]> data = DataPreProcessing.processJSONObject(dataOneStudent);
 		if (!data.isEmpty()) {
 			double[] element = data.get(0);
-			this.loadNeuralNetwork(Constants.NEURAL_NETWORK_NAME, 
-					element, Constants.NUMBER_INPUT_NODES_TO_NN);
-			System.out.println("Neural network loaded successfully");
+			
+			try {
+				InputStream input = new URL("http://javiergs.com/asu-files/TutorData.nnet").openStream();
+				this.loadNeuralNetwork(input, Constants.NEURAL_NETWORK_NAME, 
+						element, Constants.NUMBER_INPUT_NODES_TO_NN);
+				System.out.println("Neural network loaded successfully");
+			} catch (Exception e) {
+				System.out.println(e.getStackTrace());
+			}
 		}
 		
 		long msgCode = this.calculateMessageCode();
 		/**
 		 * @TODO: Uncomment when doing the training
 		 */
-		//this.setMessageToDisplay(messageOptions, msgCode);
-		//this.setMessageCode(msgCode);
-		this.setMessageToDisplay(messageOptions, 60);
-		this.setMessageCode(60);
+		this.setMessageToDisplay(messageOptions, msgCode);
+		this.setMessageCode(msgCode);
+		//this.setMessageToDisplay(messageOptions, 60);
+		//this.setMessageCode(60);
 		System.out.println("Message Code: " + msgCode);
 		System.out.println("Message for Student: " + this.getMessageForStudent());
 	}
 
-	public double[] loadNeuralNetwork(String neuralNetworkName, double[] studentData, 
+	public double[] loadNeuralNetwork(InputStream neuralNetInputStream, String neuralNetworkName, double[] studentData, 
 			int numInputNodes) {
 		// load saved neural network
-		NeuralNetwork neuralNetwork = NeuralNetwork.createFromFile(neuralNetworkName);
+		NeuralNetwork neuralNetwork = NeuralNetwork.load(neuralNetInputStream);
+		
+		
+		//NeuralNetwork neuralNetwork = NeuralNetwork.createFromFile(neuralNetworkName);
 
 		// test loaded neural network
 		System.out.println("Testing loaded neural network in StudentMessageCalculator:");
