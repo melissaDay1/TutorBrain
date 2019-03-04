@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -30,8 +31,17 @@ public class TestingDriver {
 		 */
 		ServerConnection serverConn = new ServerConnection();
 		try {
-			JSONArray jsonArrayData = serverConn.getStudentData();
-			JSONObject studentObj1 = serverConn.getDataOneStudent(jsonArrayData, 0);
+			//JSONArray jsonArrayData = serverConn.getStudentData();
+			//JSONObject studentObj1 = serverConn.getDataOneStudent(jsonArrayData, 0);
+			
+			
+			String path = "C:\\Users\\Melissa\\Documents\\Software_Engineering_Degree\\Thesis\\Documentation\\StudyWithStudents\\AI\\"
+					+ "DataTrainedInitial.txt";
+			JSONArray jsonArrayLocalTraining = LocalDataReaderTrainingData.getLocalJSONArray(path);
+			JSONObject studentObj1 = LocalDataReaderTrainingData.getDataOneStudent(jsonArrayLocalTraining, 0);
+
+			
+			
 			/*JSONObject studentObj2 = serverConn.getDataOneStudent(jsonArrayData, 1);
 			JSONObject studentObj3 = serverConn.getDataOneStudent(jsonArrayData, 2);
 			JSONObject studentObj4 = serverConn.getDataOneStudent(jsonArrayData, 3);
@@ -47,7 +57,7 @@ public class TestingDriver {
 			 * @TODO: Remove this section when integrating with plug-in
 			 * Plug-in assumes that a trained NN already exists
 			 */
-			//NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayData);
+			NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayLocalTraining);
 			/**
 			 * @TODO: End part to delete
 			 */
@@ -74,6 +84,12 @@ public class TestingDriver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (org.json.simple.parser.ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

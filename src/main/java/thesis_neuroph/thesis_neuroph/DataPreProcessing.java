@@ -15,13 +15,6 @@ import org.json.JSONObject;
  */
 
 public class DataPreProcessing {
-	/**
-	 * @TODO: Add other variables with difficult types to data input: i.e. Date, etc.
-	 */
-	//private long id;
-	/**
-	 * @TODO: Probably won't send these to NN
-	 */
 	private double[][] studentDataInput;
 	
 	private static double action;
@@ -112,37 +105,115 @@ public class DataPreProcessing {
 		else {
 			setAction("Null");
 		}
-		setLinesOfCodeTotal(inputOneStudent.getInt("linesOfCodeTotal"));
-		setKeywordComparatorFound(inputOneStudent.getInt("keywordComparatorFound"));
-		setKeywordNewFound(inputOneStudent.getInt("keywordNewFound"));
-		setKeywordDoubleFound(inputOneStudent.getInt("keywordDoubleFound"));
-		setKeywordFloatFound(inputOneStudent.getInt("keyWordFloatFound"));
-		setKeywordIfFound(inputOneStudent.getInt("keywordIfFound"));
-		setKeywordForWhileDoFound(inputOneStudent.getInt("keywordForWhileDoFound"));
-		setKeywordReturnFound(inputOneStudent.getInt("keywordReturnFound"));
-		setNumberOfCommentLines(inputOneStudent.getInt("numberOfCommentLines"));
-
-		if (!inputOneStudent.isNull("errorType")) {
-			setErrorType(inputOneStudent.getString("errorType"));
+		
+		try {
+			setLinesOfCodeTotal(inputOneStudent.getInt("linesOfCodeTotal"));
 		}
-		else {
+		catch (Exception e) {
+			setLinesOfCodeTotal(0);
+		}
+		
+		try {
+			setKeywordComparatorFound(inputOneStudent.getInt("keywordComparatorFound"));
+		}
+		catch (Exception e) {
+			setKeywordComparatorFound(0);
+		}
+		
+		try {
+			setKeywordNewFound(inputOneStudent.getInt("keywordNewFound"));
+		}
+		catch (Exception e) {
+			setKeywordNewFound(0);
+		}
+		
+		try {
+			setKeywordDoubleFound(inputOneStudent.getInt("keywordDoubleFound"));
+		}
+		catch (Exception e) {
+			setKeywordDoubleFound(0);
+		}
+		
+		try {
+			setKeywordFloatFound(inputOneStudent.getInt("keyWordFloatFound"));
+		}
+		catch (Exception e) {
+			setKeywordFloatFound(0);
+		}
+		
+		try {
+			setKeywordIfFound(inputOneStudent.getInt("keywordIfFound"));
+		}
+		catch (Exception e) {
+			setKeywordIfFound(0);
+		}
+		
+		try {
+			setKeywordForWhileDoFound(inputOneStudent.getInt("keywordForWhileDoFound"));
+		}
+		catch (Exception e) {
+			setKeywordForWhileDoFound(0);
+		}
+		
+		try {
+			setKeywordReturnFound(inputOneStudent.getInt("keywordReturnFound"));
+		}
+		catch (Exception e) {
+			setKeywordReturnFound(0);
+		}
+		
+		try {
+			setNumberOfCommentLines(inputOneStudent.getInt("numberOfCommentLines"));
+		}
+		catch (Exception e) {
+			setNumberOfCommentLines(0);
+		}
+		
+		try {
+			setErrorType(inputOneStudent.getString("errorType"));
+			if (!inputOneStudent.isNull("errorType")) {
+				setErrorType("Null");
+			}
+		}
+		catch (Exception e) {
 			setErrorType("Null");
 		}
 		
-		setAssignmentCompletedSuccessfully(inputOneStudent.getInt("assignmentCompletedSuccessfully"));
+		try {
+			setAssignmentCompletedSuccessfully(inputOneStudent.getInt("assignmentCompletedSuccessfully"));
+		}
+		catch (Exception e) {
+			setAssignmentCompletedSuccessfully(0);
+		}
 		
-		if (!inputOneStudent.isNull("messageGiven")) {
+		try {
 			setMessageGiven(inputOneStudent.getString("messageGiven"));
-
 		}
-		else {
-			setMessageGiven("Null");
+		catch (Exception e) {
+			setMessageGiven("null");
 		}
-		setMessageCode(inputOneStudent.getInt("messageCode"));
-		setFeedbackSurvey(inputOneStudent.getInt("feedbackSurvey"));
-		setCyclomaticComplexity(inputOneStudent.getInt("cyclomaticComplexity"));
-
 		
+		try {
+			setMessageCode(inputOneStudent.getInt("messageCode"));
+		}
+		catch (Exception e) {
+			setMessageCode(0);
+		}
+		
+		try {
+			setFeedbackSurvey(inputOneStudent.getInt("feedbackSurvey"));
+		}
+		catch (Exception e) {
+			setFeedbackSurvey(0);
+		}
+		
+		try {
+			setCyclomaticComplexity(inputOneStudent.getInt("cyclomaticComplexity"));
+		}
+		catch (Exception e) {
+			setCyclomaticComplexity(1);
+		}
+
 		inputDataList.add(new double[] {
 				getAction(),
 				getLinesOfCodeTotal(),
@@ -305,7 +376,6 @@ public class DataPreProcessing {
 	}
 
 	/**
-	 * @TODO: Update to handle all string inputs received from plug-in
 	 * Calculates the double value for the error message received from plug-in
 	 * @param errorTypeInput	The error message received from plug-in
 	 */

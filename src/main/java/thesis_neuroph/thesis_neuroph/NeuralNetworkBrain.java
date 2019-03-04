@@ -25,17 +25,7 @@ import org.neuroph.util.random.WeightsRandomizer;
 
 public class NeuralNetworkBrain implements LearningEventListener {
 
-	/*double linesOfCodeTotal;
-	double numberOfMethods;
-	double keywordMainFound;
-	double keywordComparatorFound;
-	double keywordNewFound;
-	double keywordDoubleFound;
-	double keywordFloatFound;
-	double outputExpected; */
-	
 	private static int numberInputNodes;
-	
 
 	public NeuralNetworkBrain(JSONArray serverInput) {
 		/**
@@ -43,13 +33,11 @@ public class NeuralNetworkBrain implements LearningEventListener {
 		 */
 		DataPreProcessing preprocessedData = new DataPreProcessing(serverInput);
 		
-		if (preprocessedData.getStudentDataInput().length == 0) {
-			/**
-			 * @TODO: Fill this in
-			 */
+		if (preprocessedData.getStudentDataInput().length != 0) {
+			this.setNumberInputNodes(preprocessedData.getStudentDataInput()[0].length);
 		}
 		else {
-			this.setNumberInputNodes(preprocessedData.getStudentDataInput()[0].length);
+			throw new IllegalArgumentException("DataPreProcessing cannot be empty!");
 		}
 		// Used for initially creating/saving the NN
 		this.trainNeuralNet(preprocessedData.getStudentDataInput());
@@ -84,9 +72,7 @@ public class NeuralNetworkBrain implements LearningEventListener {
 	public DataSet setDataForDataSet(double[][] input) {
 		// create training set
 		DataSet trainingSet = new DataSet(numberInputNodes, 1); 
-		/**
-		 * @TODO: Process all input - this is just testing for 1 element
-		 */
+		
 		for (int i = 0; i < input.length; i++) {
 			trainingSet.addRow(new DataSetRow(
 					input[i], Constants.EXPECTED_OUTPUT_FROM_NN[i]));
@@ -120,12 +106,11 @@ public class NeuralNetworkBrain implements LearningEventListener {
         mlPerceptron.learn(data);
 
         // test perceptron
-        System.out.println("Testing trained neural network in TrainedNeuralNetwork class");
+        System.out.println("Testing trained neural network in NeuralNetworkBrain class");
         testNeuralNetwork(mlPerceptron, data);
 
         // save trained neural network
         mlPerceptron.save(Constants.NEURAL_NETWORK_NAME);
-       // classLoader.getResource("toolbar-icons/" + EditorConstants.TOOL_MENU_RESOURCES[i] + ".png")
         // load saved neural network
        //NeuralNetwork loadedMlPerceptron = NeuralNetwork.createFromFile(Constants.NEURAL_NETWORK_NAME);
 

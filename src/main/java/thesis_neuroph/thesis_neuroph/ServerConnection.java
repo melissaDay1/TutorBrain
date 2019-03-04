@@ -1,26 +1,15 @@
 package thesis_neuroph.thesis_neuroph;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-//import org.eclipse.core.resources.ResourcesPlugin;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-//import com.example.tutorhelpplugin.launching.TutorPluginLogTracker;
-//import com.example.tutorhelpplugin.splashHandlers.InteractiveSplashHandler;
 
 public class ServerConnection {
 
