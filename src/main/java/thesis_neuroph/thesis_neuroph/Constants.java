@@ -199,8 +199,6 @@ public class Constants {
 	}
 
 	
-	public static final int NUMBER_INPUT_NODES_TO_NN = 16;
-	
 	public static final double[][] EXPECTED_OUTPUT_FROM_NN = 
 		{{130},
 			{30},
@@ -305,6 +303,8 @@ public class Constants {
 			
 	public static final int NUMBER_OUTPUT_NODES_FROM_NN = 1;
 	public static final int NUMBER_HIDDEN_NODES = 7;
+	public static final int NUMBER_INPUT_NODES_TO_NN = 16;
+
 	
 	public static final double LEARNING_RATE = 0.7;
 	public static final double MAX_ERROR = 0.00001;

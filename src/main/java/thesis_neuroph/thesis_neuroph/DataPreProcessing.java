@@ -19,7 +19,7 @@ public class DataPreProcessing {
 	
 	private static double action;
 	private static double linesOfCodeTotal;
-	private static double keywordComparatorFound;
+	private static double comparisonFound;
 	private static double keywordNewFound;
 	private static double keywordDoubleFound;
 	private static double keyWordFloatFound;
@@ -308,11 +308,11 @@ public class DataPreProcessing {
 	}
 
 	public static double getKeywordComparatorFound() {
-		return keywordComparatorFound;
+		return comparisonFound;
 	}
 
 	public static void setKeywordComparatorFound(int keywordComparatorFoundInput) {
-		keywordComparatorFound = keywordComparatorFoundInput;
+		comparisonFound = keywordComparatorFoundInput;
 	}
 
 	public static double getKeywordNewFound() {

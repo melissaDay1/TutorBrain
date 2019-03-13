@@ -31,14 +31,14 @@ public class TestingDriver {
 		 */
 		ServerConnection serverConn = new ServerConnection();
 		try {
-			//JSONArray jsonArrayData = serverConn.getStudentData();
-			//JSONObject studentObj1 = serverConn.getDataOneStudent(jsonArrayData, 0);
+			JSONArray jsonArrayData = serverConn.getStudentData();
+			JSONObject studentObj1 = serverConn.getDataOneStudent(jsonArrayData, 15);
 			
 			
-			String path = "C:\\Users\\Melissa\\Documents\\Software_Engineering_Degree\\Thesis\\Documentation\\StudyWithStudents\\AI\\"
-					+ "DataTrainedInitial.txt";
-			JSONArray jsonArrayLocalTraining = LocalDataReaderTrainingData.getLocalJSONArray(path);
-			JSONObject studentObj1 = LocalDataReaderTrainingData.getDataOneStudent(jsonArrayLocalTraining, 0);
+			//String path = "C:\\Users\\Melissa\\Documents\\Software_Engineering_Degree\\Thesis\\Documentation\\StudyWithStudents\\AI\\"
+				//	+ "DataTrainedInitial.txt";
+			//JSONArray jsonArrayLocalTraining = LocalDataReaderTrainingData.getLocalJSONArray(path);
+			//JSONObject studentObj1 = LocalDataReaderTrainingData.getDataOneStudent(jsonArrayLocalTraining, 0);
 
 			
 			
@@ -57,7 +57,7 @@ public class TestingDriver {
 			 * @TODO: Remove this section when integrating with plug-in
 			 * Plug-in assumes that a trained NN already exists
 			 */
-			NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayLocalTraining);
+			//NeuralNetworkBrain trainedNeuralNet = new NeuralNetworkBrain(jsonArrayLocalTraining);
 			/**
 			 * @TODO: End part to delete
 			 */
@@ -87,9 +87,6 @@ public class TestingDriver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (org.json.simple.parser.ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -107,7 +107,15 @@ public class StudentMessageCalculator {
 	}
 	
 	public long calculateMessageCode() {
-		double nnOutput = this.getNnOutput()[0] * 100; // Used for conversion to expected error code
+		double nnOutputRaw = this.getNnOutput()[0];
+		double nnOutput = 0;
+		// Output is so small (in reality, bad) that special calculations need to be made
+		if (nnOutputRaw < 0.1) {
+			nnOutput = nnOutputRaw * 1000;
+		}
+		else {
+			nnOutput = this.getNnOutput()[0] * 100; // Used for conversion to expected error code
+		}
 		long messageCode = Math.round(nnOutput / 10.0) * 10;
 		return messageCode;
 	}

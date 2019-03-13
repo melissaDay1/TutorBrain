@@ -1,8 +1,5 @@
 package thesis_neuroph.thesis_neuroph;
 
-import java.io.IOException;
-import java.text.ParseException;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
