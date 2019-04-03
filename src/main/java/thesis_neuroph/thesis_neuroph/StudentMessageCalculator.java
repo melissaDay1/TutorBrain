@@ -1,3 +1,8 @@
+/**
+ * @Source: Logic for loading and normalizing NN adapted from:
+ * 		 https://github.com/neuroph/neuroph/tree/master/neuroph-2.9/Samples/src/main/java/org/neuroph/samples
+ */
+
 package thesis_neuroph.thesis_neuroph;
 
 import java.io.InputStream;
@@ -16,6 +21,7 @@ public class StudentMessageCalculator {
 	private String messageForStudent;
 	private double[] nnOutput;
 	private int messageCode;
+	private String URLForNNStorage = "http://javiergs.com/asu-files/TutorData.nnet";
 
 	/**
 	 * @param neuralNetworkForTutor
@@ -33,7 +39,7 @@ public class StudentMessageCalculator {
 			double[] element = data.get(0);
 			
 			try {
-				InputStream input = new URL("http://javiergs.com/asu-files/TutorData.nnet").openStream();
+				InputStream input = new URL(URLForNNStorage).openStream();
 				this.loadNeuralNetwork(input, Constants.NEURAL_NETWORK_NAME, 
 						element, Constants.NUMBER_INPUT_NODES_TO_NN);
 				System.out.println("Neural network loaded successfully");
@@ -106,10 +112,17 @@ public class StudentMessageCalculator {
 		return trainingSet;
 	}
 	
+	/**
+	 * This message responsible for a bug, resulting in only outputs delivered to
+	 * 	be between 10 and 100
+	 * All messages should have values between 0 and 1, such that this method only
+	 * 	rounds the number
+	 * @return
+	 */
 	public long calculateMessageCode() {
 		double nnOutputRaw = this.getNnOutput()[0];
 		double nnOutput = 0;
-		// Output is so small (in reality, bad) that special calculations need to be made
+		// Output is so small that special calculations need to be made
 		if (nnOutputRaw < 0.1) {
 			nnOutput = nnOutputRaw * 1000;
 		}
